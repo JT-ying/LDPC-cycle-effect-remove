@@ -1,0 +1,197 @@
+% 定義SNR值
+snr = [1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5];  % SNR值(dB)
+% 定義LDPC方案1的BER值
+BER1_SNR0 = 0.118624;
+BER1_SNR1 = 0.106523;
+BER1_SNR2 = 0.094459;
+BER1_SNR3 = 0.083403;
+BER1_SNR4 = 0.072603;
+BER1_SNR5 = 0.063516;
+BER1_SNR6 = 0.054951;
+
+% 定義LDPC方案2的BER值
+BER2_SNR0 = 0.105764;
+BER2_SNR1 = 0.096863;
+BER2_SNR2 = 0.087253;
+BER2_SNR3 = 0.077958;
+BER2_SNR4 = 0.068345;
+BER2_SNR5 = 0.059961;
+BER2_SNR6 = 0.051393;
+
+% 定義LDPC方案3的BER值
+BER3_SNR0 = 0.106948;
+BER3_SNR1 = 0.097325;
+BER3_SNR2 = 0.087279;
+BER3_SNR3 = 0.078083;
+BER3_SNR4 = 0.068437;
+BER3_SNR5 = 0.060992;
+BER3_SNR6 = 0.051394;
+
+% 定義LDPC方案4的BER值
+BER4_SNR0 = 0.114505;
+BER4_SNR1 = 0.106918;
+BER4_SNR2 = 0.098857;
+BER4_SNR3 = 0.091773;
+BER4_SNR4 = 0.085314;
+BER4_SNR5 = 0.077910;
+BER4_SNR6 = 0.071007;
+
+% 定義LDPC方案5的BER值
+BER5_SNR0 = 0.122226;
+BER5_SNR1 = 0.114837;
+BER5_SNR2 = 0.107582;
+BER5_SNR3 = 0.101246;
+BER5_SNR4 = 0.094379;
+BER5_SNR5 = 0.087237;
+BER5_SNR6 = 0.081104;
+
+% 定義LDPC方案6的BER值
+BER6_SNR0 = 0.105641;
+BER6_SNR1 = 0.094435;
+BER6_SNR2 = 0.083837;
+BER6_SNR3 = 0.074571;
+BER6_SNR4 = 0.064103;
+BER6_SNR5 = 0.056579;
+BER6_SNR6 = 0.047480;
+
+% 定義LDPC方案7的BER值
+BER7_SNR0 = 0.105479;
+BER7_SNR1 = 0.093688;
+BER7_SNR2 = 0.084207;
+BER7_SNR3 = 0.073554;
+BER7_SNR4 = 0.064787;
+BER7_SNR5 = 0.055639;
+BER7_SNR6 = 0.047873;
+
+% 定義LDPC方案8的BER值
+BER8_SNR0 = 0.07;
+BER8_SNR1 = 0.058;
+BER8_SNR2 = 0.042;
+BER8_SNR3 = 0.031;
+BER8_SNR4 = 0.024;
+BER8_SNR5 = 0.017;
+BER8_SNR6 = 0.01;
+
+% 定義LDPC方案9的BER值
+BER9_SNR0 = 0.0685000000;
+BER9_SNR1 = 0.0561145833;
+BER9_SNR2 = 0.0438125000;
+BER9_SNR3 = 0.0350208333;
+BER9_SNR4 = 0.0246458333;
+BER9_SNR5 = 0.0186250000;
+BER9_SNR6 = 0.0124062500;
+
+% 定義LDPC方案10的BER值
+BER10_SNR0 = 0.0705937500;
+BER10_SNR1 = 0.0585625000;
+BER10_SNR2 = 0.0470208333;
+BER10_SNR3 = 0.0337291667;
+BER10_SNR4 = 0.0233750000;
+BER10_SNR5 = 0.0174791667;
+BER10_SNR6 = 0.0116666667;
+
+% 定義LDPC方案11的BER值
+BER11_SNR0 = 0.1299479167;
+BER11_SNR1 = 0.1245625000;
+BER11_SNR2 = 0.1170416667;
+BER11_SNR3 = 0.1100416667;
+BER11_SNR4 = 0.1031458333;
+BER11_SNR5 = 0.0950625000;
+BER11_SNR6 = 0.0873020833;
+
+% 定義LDPC方案12的BER值
+BER12_SNR0 = 0.118952;
+BER12_SNR1 = 0.105964;
+BER12_SNR2 = 0.095432;
+BER12_SNR3 = 0.084332;
+BER12_SNR4 = 0.072609;
+BER12_SNR5 = 0.062422;
+BER12_SNR6 = 0.053179;
+
+% 定義LDPC方案13的BER值
+BER13_SNR0 = 0.0713333333;
+BER13_SNR1 = 0.0587500000;
+BER13_SNR2 = 0.0446770833;
+BER13_SNR3 = 0.0341562500;
+BER13_SNR4 = 0.0256666667;
+BER13_SNR5 = 0.0186562500;
+BER13_SNR6 = 0.0110729167;
+
+% 定義LDPC方案14的BER值
+BER14_SNR0 = 0.0703750000;
+BER14_SNR1 = 0.0572187500;
+BER14_SNR2 = 0.0464062500;
+BER14_SNR3 = 0.0333750000;
+BER14_SNR4 = 0.0246770833;
+BER14_SNR5 = 0.0185000000;
+BER14_SNR6 = 0.0131458333;
+
+% Remove 公式內 v0
+BER15_SNR0 = 0.199406;
+BER15_SNR1 = 0.180000;
+BER15_SNR2 = 0.169518;
+BER15_SNR3 = 0.150000;
+BER15_SNR4 = 0.132880;
+BER15_SNR5 = 0.110000;
+BER15_SNR6 = 0.094600;
+
+% 將BER值組合成向量
+BER1 = [BER1_SNR0, BER1_SNR1, BER1_SNR2, BER1_SNR3, BER1_SNR4, BER1_SNR5, BER1_SNR6];
+%BER2 = [BER2_SNR0, BER2_SNR1, BER2_SNR2, BER2_SNR3, BER2_SNR4, BER2_SNR5, BER2_SNR6];
+%BER3 = [BER3_SNR0, BER3_SNR1, BER3_SNR2, BER3_SNR3, BER3_SNR4, BER3_SNR5, BER3_SNR6];
+%BER4 = [BER4_SNR0, BER4_SNR1, BER4_SNR2, BER4_SNR3, BER4_SNR4, BER4_SNR5, BER4_SNR6];
+%BER5 = [BER5_SNR0, BER5_SNR1, BER5_SNR2, BER5_SNR3, BER5_SNR4, BER5_SNR5, BER5_SNR6];
+%BER6 = [BER6_SNR0, BER6_SNR1, BER6_SNR2, BER6_SNR3, BER6_SNR4, BER6_SNR5, BER6_SNR6];
+%BER7 = [BER7_SNR0, BER7_SNR1, BER7_SNR2, BER7_SNR3, BER7_SNR4, BER7_SNR5, BER7_SNR6];
+BER8 = [BER8_SNR0, BER8_SNR1, BER8_SNR2, BER8_SNR3, BER8_SNR4, BER8_SNR5, BER8_SNR6];
+BER9 = [BER9_SNR0, BER9_SNR1, BER9_SNR2, BER9_SNR3, BER9_SNR4, BER9_SNR5, BER9_SNR6];
+%BER10 = [BER10_SNR0, BER10_SNR1, BER10_SNR2, BER10_SNR3, BER10_SNR4, BER10_SNR5, BER10_SNR6];
+BER11 = [BER11_SNR0, BER11_SNR1, BER11_SNR2, BER11_SNR3, BER11_SNR4, BER11_SNR5, BER11_SNR6];
+BER12 = [BER12_SNR0, BER12_SNR1, BER12_SNR2, BER12_SNR3, BER12_SNR4, BER12_SNR5, BER12_SNR6];
+BER13 = [BER13_SNR0, BER13_SNR1, BER13_SNR2, BER13_SNR3, BER13_SNR4, BER13_SNR5, BER13_SNR6];
+BER14 = [BER14_SNR0, BER14_SNR1, BER14_SNR2, BER14_SNR3, BER14_SNR4, BER14_SNR5, BER14_SNR6];
+BER15 = [BER15_SNR0, BER15_SNR1, BER15_SNR2, BER15_SNR3, BER15_SNR4, BER15_SNR5, BER15_SNR6];
+
+% 呼叫繪圖函數
+plot_BER_vs_SNR(snr, BER1, BER8, BER9, BER11, BER12, BER13, BER14);
+
+% 繪圖函數
+function plot_BER_vs_SNR(snr, BER1, BER8, BER9, BER11, BER12, BER13, BER14)
+    figure;
+    
+    semilogy(snr, BER1, 'b--square', 'LineWidth', 0.5, 'MarkerSize', 6);
+    hold on;
+    %semilogy(snr, BER2, 'k--o', 'LineWidth', 0.5, 'MarkerSize', 6);
+    %semilogy(snr, BER3, 'r--^', 'LineWidth', 0.5, 'MarkerSize', 6);
+    %semilogy(snr, BER4, 'm--diamond', 'LineWidth', 0.5, 'MarkerSize', 6);
+    %semilogy(snr, BER5, 'g--x', 'LineWidth', 0.5, 'MarkerSize', 6);
+    %semilogy(snr, BER6, 'c--*', 'LineWidth', 0.5, 'MarkerSize', 6);
+    %semilogy(snr, BER7, 'Color', '#D95319', 'LineStyle', '--','Marker', '.', 'LineWidth', 0.5, 'MarkerSize', 6); % '#D95319' = 橘色
+    semilogy(snr, BER8, 'Color', '#EDB120', 'LineStyle', '--','Marker', '*', 'LineWidth', 0.5, 'MarkerSize', 6); % '#EDB120' = 深黃色
+    semilogy(snr, BER9, 'Color', '#7E2F8E', 'LineStyle', '--','Marker', '^', 'LineWidth', 0.5, 'MarkerSize', 6); % '#7E2F8E' = 深紫色
+    %semilogy(snr, BER10, 'Color', '#A2142F', 'LineStyle', '--','Marker', 'o', 'LineWidth', 0.5, 'MarkerSize', 6); % '#A2142F' = 深紅色
+    semilogy(snr, BER11, 'r--d', 'LineWidth', 0.5, 'MarkerSize', 6);
+    semilogy(snr, BER12, 'k--x', 'LineWidth', 0.5, 'MarkerSize', 6);
+    semilogy(snr, BER13, 'g--+', 'LineWidth', 0.5, 'MarkerSize', 6);
+    semilogy(snr, BER14, 'Color', '#A2142F', 'LineStyle', '--','Marker', 'o', 'LineWidth', 0.5, 'MarkerSize', 6); % '#A2142F' = 深紅色
+    %semilogy(snr, BER15, 'b--*', 'LineWidth', 0.5, 'MarkerSize', 6);
+    hold off;
+
+    grid on;
+    xlabel('SNR (dB)', 'FontSize', 12);
+    ylabel('BER', 'FontSize', 12);
+    title('96.33.964 (Girth = 6)', 'FontSize', 14);
+
+    % 設置軸的範圍和刻度
+    xlim([min(snr) max(snr)]);
+    ylim([0.001 0.2]);
+    xticks(snr);
+       
+    ytickformat('%.e');
+
+    % 添加圖例
+    legend('Fix2 (Im = 50)', 'SPA (Gradient Flow Decoding此論文之數據, Im = 100)', 'SPA (駿德學長論文, Im = 50)', 'SPA (移除 Intrinsic Info, Im = 50)', 'Fix2 (中間pattern做正規化, Im = 50)', 'Fix2 (update q, Im = 50)', 'Fix2 (update q, Im = 25)', 'Location', 'southwest');
+
+    % 美化圖形
+    set(gca, 'FontSize', 10);
+end
