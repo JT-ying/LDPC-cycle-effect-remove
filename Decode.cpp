@@ -13,8 +13,8 @@ double SumproductAlgorithm(double* Pi, double** qij0, double** qij1, int m, int*
 	double product_qij0;
 	double product_qij1;
 
-	//double pai;//pai = ?s??????S
-	//double phai;//phai = ?X
+	//double pai;//pai = 暫存用變數
+	//double phai;//phai = 暫存用變數
 	//double fabs;
 	//double min;
 	double product_rji;
@@ -28,7 +28,7 @@ double SumproductAlgorithm(double* Pi, double** qij0, double** qij1, int m, int*
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array ?k?s	 
+	//array 初始化
 	for (i = 0; i < n; i++)
 		r_column[i] = 0;
 	for (i = 0; i < m; i++)
@@ -42,7 +42,7 @@ double SumproductAlgorithm(double* Pi, double** qij0, double** qij1, int m, int*
 		{
 			counter = 0;
 			for (q = 0; q < maxdegree; q++)
-				if (avoid_two_cycle_usage == 0)//???2-cycle?T?? by willy
+				if (avoid_two_cycle_usage == 0)//還原 2-cycle by willy
 				{
 					temp_row[counter] = qij1[j][q];
 					//printf("%f ", temp_row[counter]);
@@ -91,7 +91,7 @@ double SumproductAlgorithm(double* Pi, double** qij0, double** qij1, int m, int*
 				{
 					if (i != l)
 					{
-						product_qij0 = product_qij0 * rji0[j][i];//rji0?s???Oc-v messages	
+						product_qij0 = product_qij0 * rji0[j][i];//rji0 為 check-to-variable messages
 						product_qij1 = product_qij1 * rji1[j][i];
 					}
 				}
@@ -140,7 +140,7 @@ double SumproductAlgorithm(double* Pi, double** qij0, double** qij1, int m, int*
 		Q1[j] = Qi1;
 
 
-		//?P?_codeword
+		//判斷 codeword
 		if (Q1[j] > 0.5)
 			c_[j] = 1;
 		else c_[j] = 0;
@@ -160,8 +160,8 @@ double SumproductAlgorithm2(double* Pi, double** qij0, double** qij1, int m, int
 	double product_qij0;
 	double product_qij1;
 
-	//double pai;//pai = ?s??????S
-	//double phai;//phai = ?X
+	//double pai;//pai = 暫存用變數
+	//double phai;//phai = 暫存用變數
 	//double fabs;
 	//double min;
 	double product_rji;
@@ -175,7 +175,7 @@ double SumproductAlgorithm2(double* Pi, double** qij0, double** qij1, int m, int
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array ?k?s	 
+	//array 初始化
 	for (i = 0; i < n; i++)
 		r_column[i] = 0;
 	for (i = 0; i < m; i++)
@@ -183,20 +183,20 @@ double SumproductAlgorithm2(double* Pi, double** qij0, double** qij1, int m, int
 	//errno_t err_fopen1;
 	//FILE* fid3;
 	//err_fopen1 = fopen_s(&fid3, "SPA_Qi.dat", "a+");
-	for (j = 0; j < m; j++)	  //????
+	for (j = 0; j < m; j++)	  //逐個 check node
 	{
-		for (l = 0; l < maxdegree; l++)		 //???A?T?w row degree ?g?k
+		for (l = 0; l < maxdegree; l++)		 //逐個處理 row degree 內的邊
 		{
 			counter = 0;
 			for (q = 0; q < maxdegree; q++)
-				if (avoid_two_cycle_usage == 0)	  //???2-cycle?T?? by willy?A????? cycle-2 ?????p?A?Ih??]?w?????
+				if (avoid_two_cycle_usage == 0)	  //還原 2-cycle by willy，保留原本的 cycle-2 計算方式
 				{
 					temp_row[counter] = qij1[j][q];
 					//printf("%f ", temp_row[counter]);
 					counter++;
 				}
 				else
-					if (q != l)	   // ??? cycle-2 ?????p
+					if (q != l)	   //排除 cycle-2 對應項
 					{
 						temp_row[counter] = qij1[j][q];
 						//printf("%f ", temp_row[counter]);
@@ -226,23 +226,23 @@ double SumproductAlgorithm2(double* Pi, double** qij0, double** qij1, int m, int
 		}//for(l=0;l<maxdegree;l++)
 	}// for(j=0;j<m;j++)
 	//computation of {LLR_qij} 
-	for (j = 0; j < n; j++)	  //???
+	for (j = 0; j < n; j++)	  //逐個 variable node
 	{
-		for (l = 0; l < maxcoldegree; l++)	 //????A?T?w column degree ?g?k
+		for (l = 0; l < maxcoldegree; l++)	 //逐個處理 column degree 內的邊
 		{
-			if (C[j][l] != 0)	   //?x?}?D?s??
+			if (C[j][l] != 0)	   //有連線時才更新
 			{
 				product_qij0 = 1;
 				product_qij1 = 1;
 				for (i = 0; i < maxcoldegree; i++)
 				{
-					if (i != l)	   // ??? cycle-2 ?????p
+					if (i != l)	   //排除 cycle-2 對應項
 					{
-						product_qij0 = product_qij0 * rji0[j][i];	  //rji0?s???Oc-v messages
+						product_qij0 = product_qij0 * rji0[j][i];	  //rji0 為 check-to-variable messages
 						product_qij1 = product_qij1 * rji1[j][i];
 					}
 				}
-				if (avoid_two_cycle_usage == 0)	  //??? cylce-2 ?T???A???a???????? cycle-2 ?????p
+				if (avoid_two_cycle_usage == 0)	  //還原 cycle-2 時，這裡也保留對應的 cycle-2 項
 				{
 					product_qij0 = product_qij0 * rji0[j][l];
 					product_qij1 = product_qij1 * rji1[j][l];
@@ -256,7 +256,7 @@ double SumproductAlgorithm2(double* Pi, double** qij0, double** qij1, int m, int
 				if (product_qij1 == 0)
 					product_qij1 = 0.0000000001;
 
-				K = product_qij0 + product_qij1;	   //???W??A???H0?M??H1???v??[??1
+				K = product_qij0 + product_qij1;	   //正規化，讓 0 與 1 的機率總和為 1
 
 				product_qij0 = product_qij0 / K;
 				product_qij1 = product_qij1 / K;
@@ -264,7 +264,7 @@ double SumproductAlgorithm2(double* Pi, double** qij0, double** qij1, int m, int
 				//fprintf(fid3, "(0)q%d %d: %f\n", j, C[j][l] - 1, product_qij0);
 				//fprintf(fid3, "(1)q%d %d: %f\n", j, C[j][l] - 1, product_qij1);
 				//store
-				qij0[C[j][l] - 1][q_column[C[j][l] - 1]] = product_qij0;   //??s q?T??
+				qij0[C[j][l] - 1][q_column[C[j][l] - 1]] = product_qij0;   //儲存 q 訊息
 				qij1[C[j][l] - 1][q_column[C[j][l] - 1]] = product_qij1;
 				q_column[C[j][l] - 1] = q_column[C[j][l] - 1] + 1;
 			}
@@ -285,8 +285,8 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 	double product_qij0;
 	double product_qij1;
 
-	//double pai;//pai = ?s??????S
-	//double phai;//phai = ?X
+	//double pai;//pai = 暫存用變數
+	//double phai;//phai = 暫存用變數
 	//double fabs;
 	//double min;
 	double product_rji;
@@ -300,7 +300,7 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array ?k?s
+	//array 初始化
 	int Qnumber;
 	int cyclenumber;
 
@@ -327,7 +327,7 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 				//err_fopen1 = fopen_s(&fid3, "rji.dat", "a+");
 				//fprintf(fid3, "%d %d\n", j,l);
 
-				sumproduct3(temp_row, &rji, maxdegree, Qnumber, j, l, R, C, n, m, Pi, maxcoldegree);		//?p?? r?T??
+				sumproduct3(temp_row, &rji, maxdegree, Qnumber, j, l, R, C, n, m, Pi, maxcoldegree);		//計算 r 訊息
 
 				//fprintf(fid3, "min1:%f \n", rji);
 				//fclose(fid3);
@@ -338,7 +338,7 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 
 					//store
 				//printf("rji:%f \n", product_rji);
-				temp_rji0[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 + 0.5 * product_rji;	   //?b???x?s r?T??
+				temp_rji0[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 + 0.5 * product_rji;	   //暫存更新後的 r 訊息
 				temp_rji1[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 - 0.5 * product_rji;
 				//printf("rji0:%f rji1:%f\n", 0.5 + 0.5 * product_rji, 0.5 - 0.5 * product_rji);
 
@@ -359,14 +359,14 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 					{
 						if (i != l)
 						{
-							product_qij0 = product_qij0 * temp_rji0[j][i];//rji0?s???Oc-v messages	
+							product_qij0 = product_qij0 * temp_rji0[j][i];//rji0 為 check-to-variable messages
 							product_qij1 = product_qij1 * temp_rji1[j][i];
 						}
 					}
 					Qi0 = product_qij0 * temp_rji0[j][l];
 					Qi1 = product_qij1 * temp_rji1[j][l];
 
-					product_qij0 = product_qij0 * (1 - Pi[j]);		  //?p?? q?T??
+					product_qij0 = product_qij0 * (1 - Pi[j]);		  //計算 q 訊息
 					product_qij1 = product_qij1 * Pi[j];
 
 					if (product_qij0 == 0)
@@ -380,7 +380,7 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 					product_qij1 = product_qij1 / K;
 
 					//store
-					temp_qij0[C[j][l] - 1][q_column[C[j][l] - 1]] = product_qij0;		  //?b???x?s q?T??
+					temp_qij0[C[j][l] - 1][q_column[C[j][l] - 1]] = product_qij0;		  //暫存更新後的 q 訊息
 					temp_qij1[C[j][l] - 1][q_column[C[j][l] - 1]] = product_qij1;
 					q_column[C[j][l] - 1] = q_column[C[j][l] - 1] + 1;
 				}
@@ -440,7 +440,7 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 						{
 							if (i != l)
 							{
-								product_qij0 = product_qij0 * temp_rji0[j][i];//rji0?s???Oc-v messages	
+								product_qij0 = product_qij0 * temp_rji0[j][i];//rji0 為 check-to-variable messages
 								product_qij1 = product_qij1 * temp_rji1[j][i];
 							}
 						}
@@ -510,7 +510,7 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 
 		Q1[Qnumber] = Qi1;
 
-		//?P?_codeword
+		//判斷 codeword
 		if (Q1[Qnumber] > 0.5)
 			c_[Qnumber] = 1;
 		else c_[Qnumber] = 0;
@@ -595,7 +595,7 @@ int find_parent_index(int level4_index, int n, int m, int** R, int** C, int maxd
 			   break;
 	 }
 
-	 // ??^ level2 ??????
+	 // 回傳 level2 的父節點
 	 return level2_index;
 }
 
@@ -651,9 +651,9 @@ double LogSumproductAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, in
 {
 	int i, j, l, q;
 	double Qi = 0;
-	double sigma;//sigma = ?s?[??????U
-	//double pai;//pai = ?s??????S
-	//double phai;//phai = ?X
+	double sigma;//sigma = 所有輸入訊息總和
+	//double pai;//pai = 暫存用變數
+	//double phai;//phai = 暫存用變數
 	//double fabs;
 	//double min;
 	double LLR_rji;
@@ -667,7 +667,7 @@ double LogSumproductAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, in
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array ?k?s	 
+	//array 初始化
 	for (i = 0; i < n; i++)
 		r_column[i] = 0;
 	for (i = 0; i < m; i++)
@@ -681,7 +681,7 @@ double LogSumproductAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, in
 		{
 			counter = 0;
 			for (q = 0; q < maxdegree; q++)
-				if (avoid_two_cycle_usage == 0)//???2-cycle?T?? by willy
+				if (avoid_two_cycle_usage == 0)//還原 2-cycle by willy
 				{
 					temp_row[counter] = qij1[j][q];
 					counter++;
@@ -725,10 +725,10 @@ double LogSumproductAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, in
 				sigma = 0;
 				for (i = 0; i < maxcoldegree; i++)
 				{
-					sigma += rji0[j][i];//rji0?s???Oc-v messages						
+					sigma += rji0[j][i];//rji0 為 check-to-variable messages
 				}
 				Qi = sigma;
-				if (avoid_two_cycle_usage == 1) //???2-cycle?T??
+				if (avoid_two_cycle_usage == 1) //排除 2-cycle 影響
 				{
 					sigma -= rji0[j][l];
 				}
@@ -749,7 +749,7 @@ double LogSumproductAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, in
 		//fprintf(fid3, "%f \n", Qi);
 		//fclose(fid3);
 
-		//?P?_codeword
+		//判斷 codeword
 		if (LQ[j] < 0)
 			c_[j] = 1;
 		else c_[j] = 0;
@@ -764,9 +764,9 @@ double LogSumproductAlgorithm2(double* LLR_Pi1, double** qij1, int m, int** R, i
 {
 	int i, j, l, q;
 	double Qi = 0;
-	double sigma;//sigma = ?s?[??????U
-	//double pai;//pai = ?s??????S
-	//double phai;//phai = ?X
+	double sigma;//sigma = 所有輸入訊息總和
+	//double pai;//pai = 暫存用變數
+	//double phai;//phai = 暫存用變數
 	//double fabs;
 	//double min;
 	double LLR_rji;
@@ -780,7 +780,7 @@ double LogSumproductAlgorithm2(double* LLR_Pi1, double** qij1, int m, int** R, i
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array ?k?s	 
+	//array 初始化
 	for (i = 0; i < n; i++)
 		r_column[i] = 0;
 	for (i = 0; i < m; i++)
@@ -832,7 +832,7 @@ double LogSumproductAlgorithm2(double* LLR_Pi1, double** qij1, int m, int** R, i
 				sigma = 0;
 				for (i = 0; i < maxcoldegree; i++)
 				{
-					sigma += rji0[j][i];//rji0?s???Oc-v messages						
+					sigma += rji0[j][i];//rji0 為 check-to-variable messages
 				}
 				Qi = sigma;
 				sigma -= rji0[j][l];
@@ -852,9 +852,9 @@ double LogSumproductAlgorithm_anycycle(double* LLR_Pi1, double** qij1, double** 
 {
 	int i, j, l, q;
 	double Qi = 0;
-	double sigma;//sigma = ?s?[??????U
-	//double pai;//pai = ?s??????S
-	//double phai;//phai = ?X
+	double sigma;//sigma = 所有輸入訊息總和
+	//double pai;//pai = 暫存用變數
+	//double phai;//phai = 暫存用變數
 	//double fabs;
 	//double min;
 	double LLR_rji;
@@ -869,7 +869,7 @@ double LogSumproductAlgorithm_anycycle(double* LLR_Pi1, double** qij1, double** 
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array ?k?s	 
+	//array 初始化
 	for (Qnumber = 0; Qnumber < n; Qnumber++)
 	{
 		//fprintf(fid3, "Q%d\n", Qnumber);
@@ -914,9 +914,9 @@ double LogSumproductAlgorithm_anycycle(double* LLR_Pi1, double** qij1, double** 
 			{
 				sigma = 0;
 				for (i = 0; i < maxcoldegree; i++)
-					sigma += temp_rji0[j][i];//rji0?s???Oc-v messages						
-				sigma -= temp_rji0[j][l]; //2-cycle????
-				sigma += LLR_Pi1[j]; //?[?J??l???v
+					sigma += temp_rji0[j][i];//rji0 為 check-to-variable messages
+				sigma -= temp_rji0[j][l]; //扣除 2-cycle 對應項
+				sigma += LLR_Pi1[j]; //加上通道初始 LLR
 				//store
 				//fprintf(fid3, "(1)q%d %d: %f\n", j, C[j][l]-1,sigma);
 				temp_qij1[C[j][l] - 1][q_column[C[j][l] - 1]] = sigma;
@@ -957,9 +957,9 @@ double LogSumproductAlgorithm_anycycle(double* LLR_Pi1, double** qij1, double** 
 				{
 					sigma = 0;
 					for (i = 0; i < maxcoldegree; i++)
-						sigma += temp_rji0[j][i];//rji0?s???Oc-v messages						
-					sigma -= temp_rji0[j][l]; //2-cycle????
-					sigma += LLR_Pi1[j]; //?[?J??l???v
+						sigma += temp_rji0[j][i];//rji0 為 check-to-variable messages
+					sigma -= temp_rji0[j][l]; //扣除 2-cycle 對應項
+					sigma += LLR_Pi1[j]; //加上通道初始 LLR
 					//store
 					temp_qij1[C[j][l] - 1][q_column[C[j][l] - 1]] = sigma;
 					q_column[C[j][l] - 1] = q_column[C[j][l] - 1] + 1;
@@ -996,7 +996,7 @@ double LogSumproductAlgorithm_anycycle(double* LLR_Pi1, double** qij1, double** 
 
 		//fprintf(fid3, "Q%d : %f\n",Qnumber, LQ[Qnumber]);
 
-		//?P?_codeword
+		//判斷 codeword
 		if (LQ[Qnumber] < 0)
 			c_[Qnumber] = 1;
 		else c_[Qnumber] = 0;
@@ -1059,7 +1059,7 @@ void logsumproduct_cycle(double* row, double* rji, int maxdegree, int Qnumber, i
 	double temp_rji = 0;
 	for (i = 0; i < maxdegree; i++)
 	{
-		if (i != l) //??????`?I??v?A??K2-cycle(sign????)
+		if (i != l) //先計算符號乘積，避免 2-cycle 影響 sign 計算
 		{
 			if (row[i] > 0)
 				sign_row[i] = 1;
@@ -1069,7 +1069,7 @@ void logsumproduct_cycle(double* row, double* rji, int maxdegree, int Qnumber, i
 			sign = sign * sign_row[i];
 		}
 	}
-	for (i = 0; i < maxdegree; i++) //????4-cycle(magnitude????)
+	for (i = 0; i < maxdegree; i++) //再計算 magnitude，排除 4-cycle
 	{
 		if (i != l && Qnumber != R[j][i] - 1)
 		{
@@ -1081,7 +1081,7 @@ void logsumproduct_cycle(double* row, double* rji, int maxdegree, int Qnumber, i
 		//}
 	}
 
-	temp_rji = -log(tanh(0.5 * temp_rji)); //?`???p??
+	temp_rji = -log(tanh(0.5 * temp_rji)); //反算回訊息值
 	//printf("rji:%f\n", temp_rji);
 	if (isinf(temp_rji) == 1)
 		temp_rji = 999;

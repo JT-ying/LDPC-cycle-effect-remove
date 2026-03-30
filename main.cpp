@@ -34,15 +34,15 @@ int main()
 	if (Max_iteration_usage == 1)
 		printf("Exams reached the maximum number of iterations aren't counted\n");
 	if (avoid_two_cycle_usage == 0)
-		printf("�w�٭�2-cycle\n");
+		printf("還原 2-cycle\n");
 	if (avoid_MSA_any_cycle_usage == 0 || avoid_SPA_any_cycle_usage == 0)
-		printf("�w�ư�4-cycle\n");
+		printf("避開 4-cycle\n");
 	if (avoid_MSA_any_cycle_usage == 1 || avoid_SPA_any_cycle_usage == 1)
-		printf("�w�ư�6-cycle�H�U��cycle\n");
+		printf("避開 6-cycle 以下的 cycle\n");
 	if (avoid_MSA_any_cycle_usage == 2 || avoid_SPA_any_cycle_usage == 2)
-		printf("�w�ư�8-cycle�H�U��cycle\n");
+		printf("避開 8-cycle 以下的 cycle\n");
 	if (avoid_MSA_any_cycle_usage == 3 || avoid_SPA_any_cycle_usage == 3)
-		printf("�w�ư�10-cycle�H�U��cycle\n");
+		printf("避開 10-cycle 以下的 cycle\n");
 	if (random_usage != 1)
 		printf("The noise pattern is fixed, seed:%d\n", random_usage);
 	if (noise_estimation_errors_usage == 0)
@@ -70,7 +70,7 @@ int main()
 		errno_t err;
 		char filename[99];
 
-		//***********************************Ū�ɦW�ٻP��m****************************
+		//***********************************讀檔名稱與位置****************************
 		//strcpy(filename,"../G4_1.dat");
 		//strcpy(filename,"(18,9)H.dat");
 		//strcpy(filename,"(6,3)H.dat");
@@ -100,6 +100,13 @@ int main()
 		//*****************************************************************************
 
 		err = fopen_s(&fid, filename, "r");
+		if (err != 0 || fid == NULL) {
+			printf("錯誤：無法開啟輸入檔 %s！請確認檔案是否存在於執行目錄。\n", filename);
+			system("pause");
+			return -1;
+		}
+
+		// 如果程式跑到這裡，代表檔案讀取成功
 		fscanf_s(fid, "%d", &n);
 		fscanf_s(fid, "%d", &m);
 		fscanf_s(fid, "%d", &maxcoldegree);
@@ -109,8 +116,8 @@ int main()
 		FILE* fid2;
 		char filename2[99];
 
-		//***********************************�g�ɦW�ٻP��m****************************
-		strcpy(filename2, "408_LogProposed_Imax50.dat");
+		//***********************************寫檔名稱與位置****************************
+		strcpy(filename2, "408_SPAProposed_Imax50_home.dat");
 		//strcpy(filename2, "0_816.3.174_SPA_test_20250623.dat");
 		//strcpy(filename2, "0_(816,408)G4_SPA_without_4-cycle_effect_20250623.dat");
 		//strcpy(filename2, "0_(816,408)G4_SPA_test_20250623.dat");
@@ -125,7 +132,7 @@ int main()
 		//strcpy(filename2, "decoding_test408.3.854.dat");
 		//strcpy(filename2,"decoding_test816.3.174.dat");
 		//strcpy(filename2,"decoding_test504.504.3.504.dat");
-		//***********************************�ŧi���?****************************
+		//***********************************宣告變數****************************
 
 		int i, j, k;
 
@@ -155,7 +162,7 @@ int main()
 
 		int real_row_num;
 
-		//*************************�e�m�B�z***********************
+		//*************************前處理***********************
 		Preprocess(maxcoldegree, &maxdegree, G, H_original, &real_row_num,filename);
 		int** R;
 		R = new int* [m];
@@ -179,11 +186,11 @@ int main()
 
 		double omp_start = omp_get_wtime();
 
-		//*****************************��exam������ (OpenMP �����?)*****************************
+		//*****************************exam 平行模擬 (OpenMP 平行化)*****************************
 		#pragma omp parallel for reduction(+:total_error_bit, error_exam, hard_decoding_error, total_iteration, limit) schedule(dynamic)
 		for (exam = 0; exam < exam_number; exam++)
 		{
-			// === �C�Ӱ�����W�ߪ��üƺؤl ===
+			// === 每個執行緒獨立的亂數種子 ===
 			unsigned int thread_seed;
 			if (random_usage == 1)
 				thread_seed = (unsigned int)(exam * 97 + omp_get_thread_num() * 7919 + (unsigned int)time(NULL));
@@ -191,7 +198,7 @@ int main()
 				thread_seed = (unsigned int)(random_usage + exam);
 			srand(thread_seed);
 
-			// === �C�ӫʥ]�M�ݪ��}�C (Thread-Local) ===
+			// === 每個執行緒專屬的陣列 (Thread-Local) ===
 			int* r_column = new int[n];
 			for (int jj = 0; jj < n; jj++) r_column[jj] = 0;
 			int* q_column = new int[m];
@@ -268,7 +275,7 @@ int main()
 				for (int ii = 0; ii < maxdegree; ii++)
 					temp_qij0[jj][ii] = 0;
 
-			// === �i�׿�X (�C 1000 ���L�@���A�� atomic �קK�L�h��X) ===
+			// === 進度輸出 (每 1000 次顯示一次，避免多執行緒輸出過多) ===
 			if (exam % 1000 == 0)
 			{
 				#pragma omp critical
@@ -277,9 +284,9 @@ int main()
 
 			int errorbit = 0;
 			int c_check;
-			//***************�s�X*************
+			//***************編碼*************
 			Encode(message, c, G, n, m);
-			//***************�����q�LAWGN****************
+			//***************加入雜訊與 AWGN****************
 			double noise_power;
 			double Rnoise_power = 0;
 			noise_power = 1/pow(10.0, (SNR[times] / 10));
@@ -494,7 +501,7 @@ int main()
 				}
 			}//while(iter_i < iteration)
 
-			// === �έp���G (�֥[�� reduction �ܼ�) ===
+			// === 統計結果 (使用 reduction 累加變數) ===
 			if (Max_iteration_usage == 0) 
 			{
 				total_iteration += iter_i + 1;
@@ -522,7 +529,7 @@ int main()
 
 			hard_decoding_error += local_hard_decoding_error;
 
-			// === ���񥻦� exam ���Ҧ��O���� ===
+			// === 釋放本次 exam 的所有記憶體 ===
 			for (int ii = 0; ii < m; ii++)
 			{
 				delete[] qij0[ii];
@@ -560,12 +567,12 @@ int main()
 			delete[] c;
 			delete[] message;
 
-		}//exam��loop (OpenMP parallel for)
+		}//exam 迴圈 (OpenMP parallel for)
 
 		double omp_end = omp_get_wtime();
 		printf("Time cost: %f sec\n", omp_end - omp_start);
 
-		// === ����@�ɰ}�C (R, C, G, H_original) ===
+		// === 釋放一次性陣列 (R, C, G, H_original) ===
 		for (i = 0; i < m; i++)
 		{
 			delete[] R[i];
@@ -626,15 +633,15 @@ int main()
 		if (Max_iteration_usage == 1)
 			fprintf(fid2, "Exams reached the maximum number of iterations aren't counted\n");
 		if (avoid_two_cycle_usage == 0)
-			fprintf(fid2, "�w�٭�2-cycle\n");
+			fprintf(fid2, "已還原 2-cycle\n");
 		if (avoid_MSA_any_cycle_usage == 0 || avoid_SPA_any_cycle_usage==0)
-			fprintf(fid2, "�w�ư�4-cycle\n");
+			fprintf(fid2, "已排除 4-cycle\n");
 		if (avoid_MSA_any_cycle_usage == 1 || avoid_SPA_any_cycle_usage==1)
-			fprintf(fid2, "�w�ư�6-cycle�H�U��cycle\n");
+			fprintf(fid2, "已排除 6-cycle 以下的 cycle\n");
 		if (avoid_MSA_any_cycle_usage == 2 || avoid_SPA_any_cycle_usage==2)
-			fprintf(fid2, "�w�ư�8-cycle�H�U��cycle\n");
+			fprintf(fid2, "已排除 8-cycle 以下的 cycle\n");
 		if (avoid_MSA_any_cycle_usage == 3 || avoid_SPA_any_cycle_usage==3)
-			fprintf(fid2, "�w�ư�10-cycle�H�U��cycle\n");
+			fprintf(fid2, "已排除 10-cycle 以下的 cycle\n");
 		if(random_usage!=1)
 			fprintf(fid2, "The noise pattern is fixed, seed:%d\n", random_usage);
 		if (noise_estimation_errors_usage == 0)
