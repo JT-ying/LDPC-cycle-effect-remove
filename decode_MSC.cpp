@@ -1,4 +1,4 @@
-#include <stdio.h>
+ï»¿#include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
@@ -8,9 +8,9 @@ double MinSumCAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, int** C,
 {
 	int i, j, l, q;
 	double Qi = 0;
-	double sigma;//sigma = ³s¥[ªº²Å¸¹£U
-	//double pai;//pai = ³s­¼²Å¸¹£S
-	//double phai;//phai = £X
+	double sigma;//sigma = ï¿½sï¿½[ï¿½ï¿½ï¿½Å¸ï¿½ï¿½U
+	//double pai;//pai = ï¿½sï¿½ï¿½ï¿½Å¸ï¿½ï¿½S
+	//double phai;//phai = ï¿½X
 	//double fabs;
 	//double min;
 	double LLR_rji;
@@ -24,7 +24,7 @@ double MinSumCAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, int** C,
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array Âk¹s	 
+	//array ï¿½kï¿½s	 
 	for (i = 0; i < n; i++)
 		r_column[i] = 0;
 	for (i = 0; i < m; i++)
@@ -38,7 +38,7 @@ double MinSumCAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, int** C,
 		{
 			counter = 0;
 			for (q = 0; q < maxdegree; q++)
-				if (avoid_two_cycle_usage == 0)//ÁÙ­ì2-cycle°T®§ by willy
+				if (avoid_two_cycle_usage == 0)//ï¿½Ù­ï¿½2-cycleï¿½Tï¿½ï¿½ by willy
 				{
 					temp_row[counter] = qij1[j][q];
 					counter++;
@@ -50,9 +50,8 @@ double MinSumCAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, int** C,
 						counter++;
 					}
 
-			errno_t err_fopen1;
 			FILE* fid3;
-			err_fopen1 = fopen_s(&fid3, "rji.dat", "a+");
+			fid3 = fopen("rji.dat", "a+");
 			//fprintf(fid3, "%d %d\n", j,l);
 
 			if (avoid_two_cycle_usage == 0)
@@ -87,10 +86,10 @@ double MinSumCAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, int** C,
 				sigma = 0;
 				for (i = 0; i < maxcoldegree; i++)
 				{
-					sigma += rji0[j][i];//rji0¦sªº¬Oc-v messages						
+					sigma += rji0[j][i];//rji0ï¿½sï¿½ï¿½ï¿½Oc-v messages						
 				}
 				Qi = sigma;
-				if (avoid_two_cycle_usage == 1) //ÁÙ­ì2-cycle°T®§
+				if (avoid_two_cycle_usage == 1) //ï¿½Ù­ï¿½2-cycleï¿½Tï¿½ï¿½
 				{
 					sigma -= rji0[j][l];
 				}
@@ -111,7 +110,7 @@ double MinSumCAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, int** C,
 		//fprintf(fid3, "%f \n", Qi);
 		//fclose(fid3);
 
-		//§PÂ_codeword
+		//ï¿½Pï¿½_codeword
 		if (LQ[j] < 0)
 			c_[j] = 1;
 		else c_[j] = 0;
@@ -126,9 +125,9 @@ double MinSumCAlgorithm2(double* LLR_Pi1, double** qij1, int m, int** R, int** C
 {
 	int i, j, l, q;
 	double Qi = 0;
-	double sigma;//sigma = ³s¥[ªº²Å¸¹£U
-	//double pai;//pai = ³s­¼²Å¸¹£S
-	//double phai;//phai = £X
+	double sigma;//sigma = ï¿½sï¿½[ï¿½ï¿½ï¿½Å¸ï¿½ï¿½U
+	//double pai;//pai = ï¿½sï¿½ï¿½ï¿½Å¸ï¿½ï¿½S
+	//double phai;//phai = ï¿½X
 	//double fabs;
 	//double min;
 	double LLR_rji;
@@ -142,7 +141,7 @@ double MinSumCAlgorithm2(double* LLR_Pi1, double** qij1, int m, int** R, int** C
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array Âk¹s	 
+	//array ï¿½kï¿½s	 
 	for (i = 0; i < n; i++)
 		r_column[i] = 0;
 	for (i = 0; i < m; i++)
@@ -154,7 +153,7 @@ double MinSumCAlgorithm2(double* LLR_Pi1, double** qij1, int m, int** R, int** C
 		{
 			counter = 0;
 			for (q = 0; q < maxdegree; q++)
-				if (avoid_two_cycle_usage == 0)//ÁÙ­ì2-cycle°T®§ by willy
+				if (avoid_two_cycle_usage == 0)//ï¿½Ù­ï¿½2-cycleï¿½Tï¿½ï¿½ by willy
 				{
 					temp_row[counter] = qij1[j][q];
 					counter++;
@@ -167,7 +166,7 @@ double MinSumCAlgorithm2(double* LLR_Pi1, double** qij1, int m, int** R, int** C
 					}
 			//errno_t err_fopen1;
 			//FILE* fid3;
-			//err_fopen1 = fopen_s(&fid3, "rji.dat", "a+");
+			//fid3 = fopen("rji.dat", "a+");
 			//fprintf(fid3, "%d %d\n", j,l);
 
 			if (avoid_two_cycle_usage == 0)
@@ -203,10 +202,10 @@ double MinSumCAlgorithm2(double* LLR_Pi1, double** qij1, int m, int** R, int** C
 				sigma = 0;
 				for (i = 0; i < maxcoldegree; i++)
 				{
-					sigma += rji0[j][i];//rji0¦sªº¬Oc-v messages						
+					sigma += rji0[j][i];//rji0ï¿½sï¿½ï¿½ï¿½Oc-v messages						
 				}
 				Qi = sigma;
-				if (avoid_two_cycle_usage == 1) //ÁÙ­ì2-cycle°T®§
+				if (avoid_two_cycle_usage == 1) //ï¿½Ù­ï¿½2-cycleï¿½Tï¿½ï¿½
 				{
 					sigma -= rji0[j][l];
 				}
@@ -227,9 +226,9 @@ double MinSumCAlgorithm_anycycle(double* LLR_Pi1, double** qij1, double** temp_q
 {
 	int i, j, l, q;
 	double Qi = 0;
-	double sigma;//sigma = ³s¥[ªº²Å¸¹£U
-	//double pai;//pai = ³s­¼²Å¸¹£S
-	//double phai;//phai = £X
+	double sigma;//sigma = ï¿½sï¿½[ï¿½ï¿½ï¿½Å¸ï¿½ï¿½U
+	//double pai;//pai = ï¿½sï¿½ï¿½ï¿½Å¸ï¿½ï¿½S
+	//double phai;//phai = ï¿½X
 	//double fabs;
 	//double min;
 	double LLR_rji;
@@ -243,7 +242,7 @@ double MinSumCAlgorithm_anycycle(double* LLR_Pi1, double** qij1, double** temp_q
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array Âk¹s	 
+	//array ï¿½kï¿½s	 
 
 	int Qnumber;
 	int cyclenumber;
@@ -296,9 +295,9 @@ double MinSumCAlgorithm_anycycle(double* LLR_Pi1, double** qij1, double** temp_q
 			{
 				sigma = 0;
 				for (i = 0; i < maxcoldegree; i++)
-					sigma += temp_rji0[j][i];//rji0¦sªº¬Oc-v messages						
-				sigma -= temp_rji0[j][l]; //2-cycle¦©°£
-				sigma += LLR_Pi1[j]; //¥[¤Jªì©l¾÷²v
+					sigma += temp_rji0[j][i];//rji0ï¿½sï¿½ï¿½ï¿½Oc-v messages						
+				sigma -= temp_rji0[j][l]; //2-cycleï¿½ï¿½ï¿½ï¿½
+				sigma += LLR_Pi1[j]; //ï¿½[ï¿½Jï¿½ï¿½lï¿½ï¿½ï¿½v
 				//store
 				//fprintf(fid3, "(1)q%d %d: %f\n", j, C[j][l]-1,sigma);
 				temp_qij1[C[j][l] - 1][q_column[C[j][l] - 1]] = sigma;
@@ -342,9 +341,9 @@ double MinSumCAlgorithm_anycycle(double* LLR_Pi1, double** qij1, double** temp_q
 				{
 					sigma = 0;
 					for (i = 0; i < maxcoldegree; i++)
-						sigma += temp_rji0[j][i];//rji0¦sªº¬Oc-v messages						
-					sigma -= temp_rji0[j][l]; //2-cycle¦©°£
-					sigma += LLR_Pi1[j]; //¥[¤Jªì©l¾÷²v
+						sigma += temp_rji0[j][i];//rji0ï¿½sï¿½ï¿½ï¿½Oc-v messages						
+					sigma -= temp_rji0[j][l]; //2-cycleï¿½ï¿½ï¿½ï¿½
+					sigma += LLR_Pi1[j]; //ï¿½[ï¿½Jï¿½ï¿½lï¿½ï¿½ï¿½v
 					//store
 					temp_qij1[C[j][l] - 1][q_column[C[j][l] - 1]] = sigma;
 					q_column[C[j][l] - 1] = q_column[C[j][l] - 1] + 1;
@@ -384,7 +383,7 @@ double MinSumCAlgorithm_anycycle(double* LLR_Pi1, double** qij1, double** temp_q
 
 		//fprintf(fid3, "Q%d : %f\n",Qnumber, LQ[Qnumber]);
 
-		//§PÂ_codeword
+		//ï¿½Pï¿½_codeword
 		if (LQ[Qnumber] < 0)
 			c_[Qnumber] = 1;
 		else c_[Qnumber] = 0;
@@ -496,7 +495,7 @@ void minsum5(double* row, double* rji, int maxdegree, int Qnumber, int j, int l,
 			break;
 		}
 
-	for (i = 0; i < maxdegree; i++) //³v¤@¤ñ¸û
+	for (i = 0; i < maxdegree; i++) //ï¿½vï¿½@ï¿½ï¿½ï¿½
 	{
 		if (i != l && fabs(row[i]) < min1 && Qnumber != R[j][i] - 1)
 		{

@@ -601,50 +601,37 @@ int find_parent_index(int level4_index, int n, int m, int** R, int** C, int maxd
 
 
 void sumproduct3(double* row, double* rji, int maxdegree, int Qnumber, int j, int l, int** R, int** C, int n, int m, double* Pi, int maxcoldegree) {
-	int i;
-	double product = 1;
-	bool is_j_connected_to_root = false;
+    int i;
+    double product = 1.0;
+    bool has_root_source = false;
 
-	// 1. Confirm whether check node j connects back to root variable Qnumber
-	for (int p = 0; p < maxdegree; p++) {
-		if (R[j][p] - 1 == Qnumber) {
-			is_j_connected_to_root = true;
-			break;
-		}
-	}
+    // 1. 檢查此檢驗節點 (j) 的「訊息來源」是否包含根節點 (Qnumber)
+    for (i = 0; i < maxdegree; i++) {
+        if (R[j][i] == 0) continue; // 🌟 防護：略過不規則矩陣的補零空位
 
-	// 2. Collect neighbor information and inspect potential 4-cycles
-	for (i = 0; i < maxdegree; i++) {
-		if (i == l) continue;
+        // 條件：如果某個相鄰變數節點剛好是根節點，且它【不是】這次要傳遞的目標對象(l)
+        if (i != l && (R[j][i] - 1) == Qnumber) {
+            has_root_source = true;
+            break; // 只要觸發條件，立刻中斷尋找
+        }
+    }
 
-		int v_neighbor = R[j][i] - 1;
-		bool is_4cycle = false;
+    // 2. 🎯 執行「捨棄方程式」邏輯
+    if (has_root_source) {
+        // 直接輸出 0.0，切斷這個 check node 的所有情報
+        *rji = 0.0;  
+        return; 
+    }
 
-		if (is_j_connected_to_root) {
-			for (int k = 0; k < maxcoldegree; k++) {
-				int c_other = C[Qnumber][k] - 1;
-				if (c_other >= 0 && c_other != j) {
-					for (int p = 0; p < maxdegree; p++) {
-						if (R[c_other][p] - 1 == v_neighbor) {
-							is_4cycle = true;
-							break;
-						}
-					}
-				}
-				if (is_4cycle) break;
-			}
-		}
+    // 3. 若為安全的檢驗節點 (未被迴圈汙染)，則正常計算外在訊息
+    for (i = 0; i < maxdegree; i++) {
+        if (i != l) {
+            if (R[j][i] == 0) continue; // 🌟 防護：避免把空位當成有效節點乘進去
+            product *= (1.0 - 2.0 * row[i]);
+        }
+    }
 
-		// 3. Apply message substitution for 4-cycle neighbors
-		if (is_4cycle) {
-			product *= (1 - 2 * Pi[v_neighbor]);
-		}
-		else {
-			product *= (1 - 2 * row[i]);
-		}
-	}
-
-	*rji = product;
+    *rji = product;
 }
 
 double LogSumproductAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, int** C, double** rji0, int n, int maxdegree, int maxcoldegree, int* c_, int* r_column, int* q_column, double* LQ, double* temp_row)

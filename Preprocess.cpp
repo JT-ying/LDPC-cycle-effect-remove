@@ -19,14 +19,13 @@ int Preprocess(int maxcoldegree, int* maxdegree, int** G_temp, int** H_original,
 
 	int n, m, u, yes;
 	FILE* fid;
-	errno_t err;
-	err = fopen_s(&fid, filename, "r");
+	fid = fopen(filename, "r");
 	//材把计 H matrix Τ n  column
-	fscanf_s(fid, "%d", &n);
+	fscanf(fid, "%d", &n);
 	//材把计 H matrix Τ m  row
-	fscanf_s(fid, "%d", &m);
+	fscanf(fid, "%d", &m);
 	//材把计 H 程 coldegree
-	fscanf_s(fid, "%d", &maxcoldegree);
+	fscanf(fid, "%d", &maxcoldegree);
 	int i, j, k, l;
 	int original_m = m;
 	int element;
@@ -50,7 +49,7 @@ int Preprocess(int maxcoldegree, int* maxdegree, int** G_temp, int** H_original,
 	{
 		for (k = 0; k < maxcoldegree; k++)
 		{
-			fscanf_s(fid, "%d", &element);
+			fscanf(fid, "%d", &element);
 			H[element - 1][i] = 1;
 		}
 	}
@@ -114,7 +113,7 @@ int Preprocess(int maxcoldegree, int* maxdegree, int** G_temp, int** H_original,
 			//р俱temp
 			//for (i = 0; i < n; i++)  rewrite by cmlee
 			//	temp[i] = H[j][i];
-			memcpy_s(temp, n * sizeof(int), H[j], n * sizeof(int));
+			memcpy(temp, H[j], n * sizeof(int));
 			//┕碝т1竚
 			for (i = j; i < m; i++)
 			{

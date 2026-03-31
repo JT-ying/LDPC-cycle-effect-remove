@@ -68,7 +68,6 @@ int main()
 		int n, m, maxdegree = 0, maxcoldegree = 0;
 
 		FILE* fid;
-		errno_t err;
 		char filename[99];
 
 		//***********************************讀檔名稱與位置****************************
@@ -100,25 +99,24 @@ int main()
 		//strcpy(filename, "PEGReg252x504_new.dat");
 		//*****************************************************************************
 
-		err = fopen_s(&fid, filename, "r");
-		if (err != 0 || fid == NULL) {
+		fid = fopen(filename, "r");
+		if (fid == NULL) {
 			printf("錯誤：無法開啟輸入檔 %s！請確認檔案是否存在於執行目錄。\n", filename);
 			system("pause");
 			return -1;
 		}
 
 		// 如果程式跑到這裡，代表檔案讀取成功
-		fscanf_s(fid, "%d", &n);
-		fscanf_s(fid, "%d", &m);
-		fscanf_s(fid, "%d", &maxcoldegree);
+		fscanf(fid, "%d", &n);
+		fscanf(fid, "%d", &m);
+		fscanf(fid, "%d", &maxcoldegree);
 
 		int original_m = m;
-		errno_t err_fopen;
 		FILE* fid2;
 		char filename2[99];
 
 		//***********************************寫檔名稱與位置****************************
-		strcpy(filename2, "408_SPA_Imax50_discard_check_equation.dat");
+		strcpy(filename2, "408_SPA_Imax50__discard_check_node.dat");
 		//strcpy(filename2, "0_816.3.174_SPA_test_20250623.dat");
 		//strcpy(filename2, "0_(816,408)G4_SPA_without_4-cycle_effect_20250623.dat");
 		//strcpy(filename2, "0_(816,408)G4_SPA_test_20250623.dat");
@@ -592,7 +590,7 @@ int main()
 			delete[] G[i];
 		delete[] G;
 
-		if (err == 0)
+		if (fid != NULL)
 		{
 			printf("The file %s was opened\n", filename2);
 		}
@@ -608,7 +606,7 @@ int main()
 		total_iteration1[times] = total_iteration;
 		real_row_num1[times] = real_row_num;
 		exam_number1[times] = limit;
-		err_fopen = fopen_s(&fid2, filename2, "a+");
+		fid2 = fopen(filename2, "a+");
 		fprintf(fid2, "\nSNR is %e \n", SNR[times]);
 		if(SNR_offset_usage !=0)
 			fprintf(fid2, "SNR_offset_usage is %f \n", SNR_offset_usage);
