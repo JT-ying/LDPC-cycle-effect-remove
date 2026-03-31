@@ -116,7 +116,7 @@ int main()
 		char filename2[99];
 
 		//***********************************寫檔名稱與位置****************************
-		strcpy(filename2, "408_SPA_Imax50__discard_check_node.dat");
+		strcpy(filename2, "408_SPA_Imax50_Hotspots.dat");
 		//strcpy(filename2, "0_816.3.174_SPA_test_20250623.dat");
 		//strcpy(filename2, "0_(816,408)G4_SPA_without_4-cycle_effect_20250623.dat");
 		//strcpy(filename2, "0_(816,408)G4_SPA_test_20250623.dat");

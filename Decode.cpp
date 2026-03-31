@@ -4,6 +4,17 @@
 #include <time.h>
 #include "Configuration.h"
 
+// 4-cycle 熱點黑名單 (參與 >= 2 次的 Variable Nodes)
+static const int HOTSPOT_NODES[] = {26, 28, 66, 72, 81, 132, 150, 151, 182, 193, 194, 201};
+static const int HOTSPOT_COUNT = 12;
+
+static bool is_hotspot(int v_node_index) {
+    for (int i = 0; i < HOTSPOT_COUNT; i++) {
+        if (HOTSPOT_NODES[i] == v_node_index) return true;
+    }
+    return false;
+}
+
 double SumproductAlgorithm(double* Pi, double** qij0, double** qij1, int m, int** R, int** C, double** rji0, double** rji1, int n, int maxdegree, int maxcoldegree, int* c_, int* r_column, int* q_column, double* Q1, double* temp_row)
 {
 	int i, j, l, q;
@@ -600,6 +611,8 @@ int find_parent_index(int level4_index, int n, int m, int** R, int** C, int maxd
 }
 
 
+#if 0
+#if 0
 void sumproduct3(double* row, double* rji, int maxdegree, int Qnumber, int j, int l, int** R, int** C, int n, int m, double* Pi, int maxcoldegree) {
     int i;
     double product = 1.0;
@@ -628,6 +641,97 @@ void sumproduct3(double* row, double* rji, int maxdegree, int Qnumber, int j, in
         if (i != l) {
             if (R[j][i] == 0) continue; // 🌟 防護：避免把空位當成有效節點乘進去
             product *= (1.0 - 2.0 * row[i]);
+        }
+    }
+
+    *rji = product;
+}
+#endif
+
+void sumproduct3(double* row, double* rji, int maxdegree, int Qnumber, int j, int l, int** R, int** C, int n, int m, double* Pi, int maxcoldegree) {
+    int i;
+    double product = 1.0;
+
+    for (i = 0; i < maxdegree; i++) {
+        if (i != l) {
+            if (R[j][i] == 0) continue;
+
+            bool is_4cycle = false;
+            int v_neighbor = R[j][i] - 1;
+
+            for (int k = 0; k < maxcoldegree; k++) {
+                if (C[v_neighbor][k] == 0 || C[v_neighbor][k] - 1 == j) continue;
+
+                int neighbor_check = C[v_neighbor][k] - 1;
+                for (int k2 = 0; k2 < maxdegree; k2++) {
+                    if (R[neighbor_check][k2] == 0) continue;
+                    if (R[neighbor_check][k2] - 1 == Qnumber) {
+                        is_4cycle = true;
+                        break;
+                    }
+                }
+
+                if (is_4cycle) break;
+            }
+
+            // 3. Hybrid SPA 核心邏輯：精準打擊
+            if (is_4cycle) {
+                // 如果這個產生 4-cycle 的節點是熱點毒瘤，則直接捨棄整個檢查方程式 (提早結束並給予 0.0)
+                if (is_hotspot(v_neighbor)) {
+                    *rji = 0.0;
+                    return; // 直接中斷這個 function，捨棄這個檢查節點傳遞出去的訊息
+                } else {
+                    // 如果只是偶然產生 1 次 4-cycle 的普通節點，放過它，維持標準 SPA 外在訊息計算
+                    product *= (1.0 - 2.0 * row[i]);
+                }
+            } else {
+                // 正常的非迴圈路徑，維持標準 SPA 外在訊息計算
+                product *= (1.0 - 2.0 * row[i]);
+            }
+        }
+    }
+
+    *rji = product;
+}
+#endif
+
+void sumproduct3(double* row, double* rji, int maxdegree, int Qnumber, int j, int l, int** R, int** C, int n, int m, double* Pi, int maxcoldegree) {
+    int i;
+    double product = 1.0;
+
+    for (i = 0; i < maxdegree; i++) {
+        if (i != l) {
+            if (R[j][i] == 0) continue;
+
+            bool is_4cycle = false;
+            int v_neighbor = R[j][i] - 1;
+
+            for (int k = 0; k < maxcoldegree; k++) {
+                if (C[v_neighbor][k] == 0 || C[v_neighbor][k] - 1 == j) continue;
+
+                int neighbor_check = C[v_neighbor][k] - 1;
+                for (int k2 = 0; k2 < maxdegree; k2++) {
+                    if (R[neighbor_check][k2] == 0) continue;
+                    if (R[neighbor_check][k2] - 1 == Qnumber) {
+                        is_4cycle = true;
+                        break;
+                    }
+                }
+
+                if (is_4cycle) break;
+            }
+
+            if (is_4cycle) {
+                // 🎯 關鍵修正：判斷目前的「目標變數節點 (Qnumber)」是否為熱點
+                if (is_hotspot(Qnumber)) {
+                    *rji = 0.0;
+                    return;
+                } else {
+                    product *= (1.0 - 2.0 * row[i]);
+                }
+            } else {
+                product *= (1.0 - 2.0 * row[i]);
+            }
         }
     }
 
