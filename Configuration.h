@@ -2,11 +2,11 @@
 
 //參數設定
 //跑模擬時要注意system("pause")有沒有關掉
-const int simulation_times = 7;
+const int simulation_times = 1;
 
-//const double SNR[simulation_times] = {2.5};
+const double SNR[simulation_times] = {2.5};
 //const double SNR[simulation_times] = {1.0,1.25,1.5,1.75,2.0,2.25,2.5,2.75,3.0,3.25,3.5};
-const double SNR[simulation_times] = {1.0,1.25,1.5,1.75,2.0,2.25,2.5}; //(dB)，做7個db，simulation_times也要變動
+//const double SNR[simulation_times] = {1.0,1.25,1.5,1.75,2.0,2.25,2.5}; //(dB)，做7個db，simulation_times也要變動
 //const double SNR[simulation_times] = {2.5,2.75,3.0,3.25,3.5};//(dB)，做多個db，simulation_times也要變動
 //const double SNR[simulation_times] = { 3.75, 4.0 };    //補高SNR
 //const double SNR[simulation_times] = {1.0,1.25,1.5};
@@ -17,7 +17,7 @@ const double SNR[simulation_times] = {1.0,1.25,1.5,1.75,2.0,2.25,2.5}; //(dB)，
 //const double SNR[simulation_times] = {3.25,3.5};
 //const double rate = 0.4;
 
-const int iteration = 100; //最大迭代次數
+const int iteration = 50; //最大迭代次數
 const int effective_exam_number = 100000; //有效模擬次數 若需僅採計迭代次數未達到最大迭代次數時使用(搭配Max_iteration_usage)
 const int noise_estimation_errors_usage = 1; //1為考慮SNR估計誤差(除以設定SNR power)，0為不考慮(除以實際噪音SNR power)，需使用SNR_offset_usage
 const int exam_number = 1000; //總模擬次數

@@ -8,9 +8,10 @@
 #include <string.h>
 #include <omp.h>
 
-
 int main()
 {
+	system("chcp 65001");
+
 	int times;
 	int* error_exam1;
 	int* total_error_bit1;
@@ -36,13 +37,13 @@ int main()
 	if (avoid_two_cycle_usage == 0)
 		printf("還原 2-cycle\n");
 	if (avoid_MSA_any_cycle_usage == 0 || avoid_SPA_any_cycle_usage == 0)
-		printf("避開 4-cycle\n");
+		printf("刪除 4-cycle\n");
 	if (avoid_MSA_any_cycle_usage == 1 || avoid_SPA_any_cycle_usage == 1)
-		printf("避開 6-cycle 以下的 cycle\n");
+		printf("刪除 6-cycle 以下的 cycle\n");
 	if (avoid_MSA_any_cycle_usage == 2 || avoid_SPA_any_cycle_usage == 2)
-		printf("避開 8-cycle 以下的 cycle\n");
+		printf("刪除 8-cycle 以下的 cycle\n");
 	if (avoid_MSA_any_cycle_usage == 3 || avoid_SPA_any_cycle_usage == 3)
-		printf("避開 10-cycle 以下的 cycle\n");
+		printf("刪除 10-cycle 以下的 cycle\n");
 	if (random_usage != 1)
 		printf("The noise pattern is fixed, seed:%d\n", random_usage);
 	if (noise_estimation_errors_usage == 0)
@@ -117,7 +118,7 @@ int main()
 		char filename2[99];
 
 		//***********************************寫檔名稱與位置****************************
-		strcpy(filename2, "408_SPAProposed_Imax50_home.dat");
+		strcpy(filename2, "408_SPA_Imax50_discard_check_equation.dat");
 		//strcpy(filename2, "0_816.3.174_SPA_test_20250623.dat");
 		//strcpy(filename2, "0_(816,408)G4_SPA_without_4-cycle_effect_20250623.dat");
 		//strcpy(filename2, "0_(816,408)G4_SPA_test_20250623.dat");
