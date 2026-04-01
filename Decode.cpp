@@ -5,8 +5,8 @@
 #include "Configuration.h"
 
 // 4-cycle 熱點黑名單 (參與 >= 2 次的 Variable Nodes)
-static const int HOTSPOT_NODES[] = {26, 28, 66, 72, 81, 132, 150, 151, 182, 193, 194, 201};
-static const int HOTSPOT_COUNT = 12;
+static const int HOTSPOT_NODES[] = {28, 56, 57, 81, 127, 132, 141, 149, 155, 158, 173, 183, 188};
+static const int HOTSPOT_COUNT = 13;
 
 static bool is_hotspot(int v_node_index) {
     for (int i = 0; i < HOTSPOT_COUNT; i++) {
@@ -314,6 +314,24 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 	//array 初始化
 	int Qnumber;
 	int cyclenumber;
+	int* is_cn_muted = new int[m];
+
+	for (i = 0; i < m; i++)
+		is_cn_muted[i] = 0;
+
+	for (i = 0; i < m; i++)
+	{
+		for (j = 0; j < maxdegree; j++)
+		{
+			if (R[i][j] == 0) continue;
+
+			if (is_hotspot(R[i][j] - 1))
+			{
+				is_cn_muted[i] = 1;
+				break;
+			}
+		}
+	}
 
 
 	for (Qnumber = 0; Qnumber < n; Qnumber++)
@@ -349,8 +367,14 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 
 					//store
 				//printf("rji:%f \n", product_rji);
-				temp_rji0[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 + 0.5 * product_rji;	   //暫存更新後的 r 訊息
-				temp_rji1[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 - 0.5 * product_rji;
+				if (is_cn_muted[j] == 1) {
+					temp_rji0[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5;
+					temp_rji1[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5;
+				}
+				else {
+					temp_rji0[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 + 0.5 * product_rji;	   //暫存更新後的 r 訊息
+					temp_rji1[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 - 0.5 * product_rji;
+				}
 				//printf("rji0:%f rji1:%f\n", 0.5 + 0.5 * product_rji, 0.5 - 0.5 * product_rji);
 
 				r_column[R[j][l] - 1] = r_column[R[j][l] - 1] + 1;
@@ -430,8 +454,14 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 
 						//store
 					//printf("rji:%f \n", product_rji);
-					temp_rji0[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 + 0.5 * product_rji;
-					temp_rji1[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 - 0.5 * product_rji;
+					if (is_cn_muted[j] == 1) {
+						temp_rji0[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5;
+						temp_rji1[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5;
+					}
+					else {
+						temp_rji0[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 + 0.5 * product_rji;
+						temp_rji1[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 - 0.5 * product_rji;
+					}
 					//printf("rji0:%f rji1:%f\n", 0.5 + 0.5 * product_rji, 0.5 - 0.5 * product_rji);
 
 					r_column[R[j][l] - 1] = r_column[R[j][l] - 1] + 1;
@@ -529,6 +559,7 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 	}
 	//delete (temp_row);
 
+	delete[] is_cn_muted;
 	return 0;
 }
 
