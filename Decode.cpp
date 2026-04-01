@@ -635,9 +635,10 @@ void sumproduct3(double* row, double* rji, int maxdegree, int Qnumber, int j, in
 			}
 		}
 
-		// 3. Apply message substitution for 4-cycle neighbors
+		// 3. Discard the whole check equation if any neighbor forms a 4-cycle
 		if (is_4cycle) {
-			product *= (1 - 2 * Pi[v_neighbor]);
+			product = 0.0;
+			break;
 		}
 		else {
 			product *= (1 - 2 * row[i]);
