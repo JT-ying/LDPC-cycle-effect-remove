@@ -601,51 +601,53 @@ int find_parent_index(int level4_index, int n, int m, int** R, int** C, int maxd
 
 
 void sumproduct3(double* row, double* rji, int maxdegree, int Qnumber, int j, int l, int** R, int** C, int n, int m, double* Pi, int maxcoldegree) {
-	int i;
-	double product = 1;
-	bool is_j_connected_to_root = false;
+    int i;
+    double product = 1.0;
+    bool is_j_connected_to_root = false;
 
-	// 1. Confirm whether check node j connects back to root variable Qnumber
-	for (int p = 0; p < maxdegree; p++) {
-		if (R[j][p] - 1 == Qnumber) {
-			is_j_connected_to_root = true;
-			break;
-		}
-	}
+    // 1. 確認目前的檢驗節點 j 是否有連回根變數節點 Qnumber
+    for (int p = 0; p < maxdegree; p++) {
+        if (R[j][p] == 0) continue; // 防護：略過補零空位
+        if (R[j][p] - 1 == Qnumber) {
+            is_j_connected_to_root = true;
+            break;
+        }
+    }
 
-	// 2. Collect neighbor information and inspect potential 4-cycles
-	for (i = 0; i < maxdegree; i++) {
-		if (i == l) continue;
+    // 2. 收集相鄰節點資訊並偵測 4-cycle
+    for (i = 0; i < maxdegree; i++) {
+        if (i == l) continue; // 排除目標對象 (外在訊息定義)
+        if (R[j][i] == 0) continue; // 防護：略過補零空位
 
-		int v_neighbor = R[j][i] - 1;
-		bool is_4cycle = false;
+        int v_neighbor = R[j][i] - 1;
+        bool is_4cycle = false;
 
-		if (is_j_connected_to_root) {
-			for (int k = 0; k < maxcoldegree; k++) {
-				int c_other = C[Qnumber][k] - 1;
-				if (c_other >= 0 && c_other != j) {
-					for (int p = 0; p < maxdegree; p++) {
-						if (R[c_other][p] - 1 == v_neighbor) {
-							is_4cycle = true;
-							break;
-						}
-					}
-				}
-				if (is_4cycle) break;
-			}
-		}
+        // 如果 j 有連回根節點，我們才需要往下檢查是否形成封閉的 4-cycle
+        if (is_j_connected_to_root) {
+            for (int k = 0; k < maxcoldegree; k++) {
+                int c_other = C[Qnumber][k] - 1;
+                if (c_other >= 0 && c_other != j) {
+                    for (int p = 0; p < maxdegree; p++) {
+                        if (R[c_other][p] - 1 == v_neighbor) {
+                            is_4cycle = true; // 🎯 抓到 4-cycle！
+                            break;
+                        }
+                    }
+                }
+                if (is_4cycle) break;
+            }
+        }
 
-		// 3. Discard the whole check equation if any neighbor forms a 4-cycle
-		if (is_4cycle) {
-			product = 0.0;
-			break;
-		}
-		else {
-			product *= (1 - 2 * row[i]);
-		}
-	}
+        // 3. 若形成 4-cycle，捨棄整條檢查方程式 (Discard Check Equation)
+        if (is_4cycle) {
+            product = 0.0;
+            break; // 直接中斷該 check node 的連乘，強制傳遞 P=0.5 的無效資訊
+        } else {
+            product *= (1.0 - 2.0 * row[i]);
+        }
+    }
 
-	*rji = product;
+    *rji = product;
 }
 
 double LogSumproductAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, int** C, double** rji0, int n, int maxdegree, int maxcoldegree, int* c_, int* r_column, int* q_column, double* LQ, double* temp_row)
