@@ -5,14 +5,22 @@
 #include "Configuration.h"
 
 // 4-cycle ?±é?é»‘å???(?ƒè? >= 2 æ¬¡ç? Variable Nodes)
-static const int HOTSPOT_NODES[] = {28, 56, 57, 81, 127, 132, 141, 149, 155, 158, 173, 183, 188};
+static const int HOTSPOT_NODES[] = {
+	28, 56, 57, 81, 127, 132, 141,
+	149, 155, 158, 173, 183, 188
+};
 static const int HOTSPOT_COUNT = 13;
 
-static bool is_hotspot(int v_node_index) {
-    for (int i = 0; i < HOTSPOT_COUNT; i++) {
-        if (HOTSPOT_NODES[i] == v_node_index) return true;
-    }
-    return false;
+static bool is_hotspot(int v_node_index)
+{
+	for (int i = 0; i < HOTSPOT_COUNT; i++)
+	{
+		if (HOTSPOT_NODES[i] == v_node_index)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 double SumproductAlgorithm(double* Pi, double** qij0, double** qij1, int m, int** R, int** C, double** rji0, double** rji1, int n, int maxdegree, int maxcoldegree, int* c_, int* r_column, int* q_column, double* Q1, double* temp_row)
@@ -348,11 +356,24 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 
 					//store
 				//printf("rji:%f \n", product_rji);
-				temp_rji0[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 + 0.5 * product_rji;	   //?«å??´æ–°å¾Œç? r è¨Šæ¯
-				temp_rji1[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 - 0.5 * product_rji;
-				//printf("rji0:%f rji1:%f\n", 0.5 + 0.5 * product_rji, 0.5 - 0.5 * product_rji);
+				if (R[j][l] == 0)
+				{
+					continue;
+				}
 
-				r_column[R[j][l] - 1] = r_column[R[j][l] - 1] + 1;
+				int v_dest = R[j][l] - 1;
+
+				if (is_hotspot(v_dest))
+				{
+					temp_rji0[v_dest][r_column[v_dest]] = 0.5;
+					temp_rji1[v_dest][r_column[v_dest]] = 0.5;
+				}
+				else
+				{
+					temp_rji0[v_dest][r_column[v_dest]] = 0.5 + 0.5 * product_rji;
+					temp_rji1[v_dest][r_column[v_dest]] = 0.5 - 0.5 * product_rji;
+				}
+				r_column[v_dest] = r_column[v_dest] + 1;
 				//}//if(qij1[j][l] != 0)
 			}//for(l=0;l<maxdegree;l++)
 		}// for(j=0;j<m;j++)
@@ -429,11 +450,24 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 
 						//store
 					//printf("rji:%f \n", product_rji);
-					temp_rji0[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 + 0.5 * product_rji;
-					temp_rji1[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 - 0.5 * product_rji;
-					//printf("rji0:%f rji1:%f\n", 0.5 + 0.5 * product_rji, 0.5 - 0.5 * product_rji);
+					if (R[j][l] == 0)
+					{
+						continue;
+					}
 
-					r_column[R[j][l] - 1] = r_column[R[j][l] - 1] + 1;
+					int v_dest = R[j][l] - 1;
+
+					if (is_hotspot(v_dest))
+					{
+						temp_rji0[v_dest][r_column[v_dest]] = 0.5;
+						temp_rji1[v_dest][r_column[v_dest]] = 0.5;
+					}
+					else
+					{
+						temp_rji0[v_dest][r_column[v_dest]] = 0.5 + 0.5 * product_rji;
+						temp_rji1[v_dest][r_column[v_dest]] = 0.5 - 0.5 * product_rji;
+					}
+					r_column[v_dest] = r_column[v_dest] + 1;
 					//}//if(qij1[j][l] != 0)
 				}//for(l=0;l<maxdegree;l++)
 			}// for(j=0;j<m;j++)
@@ -646,103 +680,24 @@ void sumproduct3(double* row, double* rji, int maxdegree, int Qnumber, int j, in
     *rji = product;
 }
 #endif
-
-void sumproduct3(double* row, double* rji, int maxdegree, int Qnumber, int j, int l, int** R, int** C, int n, int m, double* Pi, int maxcoldegree) {
-    int i;
-    double product = 1.0;
-
-    for (i = 0; i < maxdegree; i++) {
-        if (i != l) {
-            if (R[j][i] == 0) continue;
-
-            bool is_4cycle = false;
-            int v_neighbor = R[j][i] - 1;
-
-            for (int k = 0; k < maxcoldegree; k++) {
-                if (C[v_neighbor][k] == 0 || C[v_neighbor][k] - 1 == j) continue;
-
-                int neighbor_check = C[v_neighbor][k] - 1;
-                for (int k2 = 0; k2 < maxdegree; k2++) {
-                    if (R[neighbor_check][k2] == 0) continue;
-                    if (R[neighbor_check][k2] - 1 == Qnumber) {
-                        is_4cycle = true;
-                        break;
-                    }
-                }
-
-                if (is_4cycle) break;
-            }
-
-            // 3. Hybrid SPA ?¸å??è¼¯ï¼šç²¾æº–æ???
-            if (is_4cycle) {
-                // å¦‚æ??™å€‹ç”¢??4-cycle ?„ç?é»žæ˜¯?±é?æ¯’ç˜¤ï¼Œå??´æŽ¥?¨æ??´å€‹æª¢?¥æ–¹ç¨‹å? (?æ—©çµæ?ä¸¦çµ¦äº?0.0)
-                if (is_hotspot(v_neighbor)) {
-                    *rji = 0.0;
-                    return; // ?´æŽ¥ä¸­æ–·?™å€?functionï¼Œæ¨æ£„é€™å€‹æª¢?¥ç?é»žå‚³?žå‡º?»ç?è¨Šæ¯
-                } else {
-                    // å¦‚æ??ªæ˜¯?¶ç„¶?¢ç? 1 æ¬?4-cycle ?„æ™®?šç?é»žï??¾é?å®ƒï?ç¶­æ?æ¨™æ? SPA å¤–åœ¨è¨Šæ¯è¨ˆç?
-                    product *= (1.0 - 2.0 * row[i]);
-                }
-            } else {
-                // æ­?¸¸?„é?è¿´å?è·¯å?ï¼Œç¶­?æ?æº?SPA å¤–åœ¨è¨Šæ¯è¨ˆç?
-                product *= (1.0 - 2.0 * row[i]);
-            }
-        }
-    }
-
-    *rji = product;
-}
 #endif
 
-void sumproduct3(double* row, double* rji, int maxdegree, int Qnumber, int j, int l, int** R, int** C, int n, int m, double* Pi, int maxcoldegree) {
-    int i;
-    double product = 1.0;
-    const bool target_is_hotspot = is_hotspot(Qnumber);
+void sumproduct3(double* row, double* rji, int maxdegree, int Qnumber, int j, int l, int** R, int** C, int n, int m, double* Pi, int maxcoldegree)
+{
+	int i;
+	double product = 1.0;
 
-    // Fast path: non-hotspot targets use the standard SPA check-node update.
-    if (!target_is_hotspot) {
-        for (i = 0; i < maxdegree; i++) {
-            if (i == l || R[j][i] == 0) continue;
-            product *= (1.0 - 2.0 * row[i]);
-        }
-        *rji = product;
-        return;
-    }
+	for (i = 0; i < maxdegree; i++)
+	{
+		if (i == l || R[j][i] == 0)
+		{
+			continue;
+		}
 
-    // Hotspot targets only: search for a 4-cycle involving Qnumber.
-    for (i = 0; i < maxdegree; i++) {
-        if (i == l || R[j][i] == 0) continue;
+		product *= (1.0 - 2.0 * row[i]);
+	}
 
-        bool is_4cycle = false;
-        const int v_neighbor = R[j][i] - 1;
-        if (v_neighbor < 0 || v_neighbor >= n) continue;
-
-        for (int k = 0; k < maxcoldegree; k++) {
-            if (C[v_neighbor][k] == 0 || C[v_neighbor][k] - 1 == j) continue;
-
-            const int neighbor_check = C[v_neighbor][k] - 1;
-            if (neighbor_check < 0 || neighbor_check >= m) continue;
-
-            for (int k2 = 0; k2 < maxdegree; k2++) {
-                if (R[neighbor_check][k2] == 0) continue;
-                if (R[neighbor_check][k2] - 1 == Qnumber) {
-                    is_4cycle = true;
-                    break;
-                }
-            }
-
-            if (is_4cycle) break;
-        }
-
-        if (is_4cycle) {
-            *rji = 0.0;
-            return;
-        }
-
-        product *= (1.0 - 2.0 * row[i]);
-    }
-
-    *rji = product;
+	*rji = product;
 }
 
 double LogSumproductAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, int** C, double** rji0, int n, int maxdegree, int maxcoldegree, int* c_, int* r_column, int* q_column, double* LQ, double* temp_row)

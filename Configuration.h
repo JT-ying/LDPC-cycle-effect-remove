@@ -2,10 +2,10 @@
 
 //參數設定
 //跑模擬時要注意system("pause")有沒有關掉
-const int simulation_times = 11;
+const int simulation_times = 1;
 
-//const double SNR[simulation_times] = {5.5};
-const double SNR[simulation_times] = {1.0,1.25,1.5,1.75,2.0,2.25,2.5,2.75,3.0,3.25,3.5};
+const double SNR[simulation_times] = {2.5};
+//const double SNR[simulation_times] = {1.0,1.25,1.5,1.75,2.0,2.25,2.5,2.75,3.0,3.25,3.5};
 //const double SNR[simulation_times] = {1.0,1.25,1.5,1.75,2.0,2.25,2.5}; //(dB)，做7個db，simulation_times也要變動
 //const double SNR[simulation_times] = {2.5,2.75,3.0,3.25,3.5};//(dB)，做多個db，simulation_times也要變動
 //const double SNR[simulation_times] = { 3.75, 4.0 };    //補高SNR
@@ -31,7 +31,7 @@ const int iteration_output_usage = 0;// SPA,MSA且不做極值化時，加上條
 
 const int sumproduct_usage = 1;//1是使用sumproduct,0是使用minsum
 const int log_sumproduct_usage = 0; //1是使用對數域的SPA,0是使用機率域的SPA
-const int avoid_SPA_any_cycle_usage = -1; //SPA刪除4-cycle->0 6cycle以下->1 8cycle以下->2 10cycle以下->3，不使用請輸入-1
+const int avoid_SPA_any_cycle_usage = 0; //SPA刪除4-cycle->0 6cycle以下->1 8cycle以下->2 10cycle以下->3，不使用請輸入-1
 
 const double alpha = 0.75; // NMSA所使用的alpha值
 const int alpha_usage = 1; // 1就是使用NMSA,0就是MSA與boxsum,NMSA = normalized MSA
