@@ -4,7 +4,7 @@
 #include <time.h>
 #include "Configuration.h"
 
-// 4-cycle 熱點黑名單 (參與 >= 2 次的 Variable Nodes)
+// 4-cycle ?��?黑�???(?��? >= 2 次�? Variable Nodes)
 static const int HOTSPOT_NODES[] = {28, 56, 57, 81, 127, 132, 141, 149, 155, 158, 173, 183, 188};
 static const int HOTSPOT_COUNT = 13;
 
@@ -24,8 +24,8 @@ double SumproductAlgorithm(double* Pi, double** qij0, double** qij1, int m, int*
 	double product_qij0;
 	double product_qij1;
 
-	//double pai;//pai = 暫存用變數
-	//double phai;//phai = 暫存用變數
+	//double pai;//pai = ?��??��???
+	//double phai;//phai = ?��??��???
 	//double fabs;
 	//double min;
 	double product_rji;
@@ -39,7 +39,7 @@ double SumproductAlgorithm(double* Pi, double** qij0, double** qij1, int m, int*
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array 初始化
+	//array ?��???
 	for (i = 0; i < n; i++)
 		r_column[i] = 0;
 	for (i = 0; i < m; i++)
@@ -53,7 +53,7 @@ double SumproductAlgorithm(double* Pi, double** qij0, double** qij1, int m, int*
 		{
 			counter = 0;
 			for (q = 0; q < maxdegree; q++)
-				if (avoid_two_cycle_usage == 0)//還原 2-cycle by willy
+				if (avoid_two_cycle_usage == 0)//?��? 2-cycle by willy
 				{
 					temp_row[counter] = qij1[j][q];
 					//printf("%f ", temp_row[counter]);
@@ -102,7 +102,7 @@ double SumproductAlgorithm(double* Pi, double** qij0, double** qij1, int m, int*
 				{
 					if (i != l)
 					{
-						product_qij0 = product_qij0 * rji0[j][i];//rji0 為 check-to-variable messages
+						product_qij0 = product_qij0 * rji0[j][i];//rji0 ??check-to-variable messages
 						product_qij1 = product_qij1 * rji1[j][i];
 					}
 				}
@@ -151,7 +151,7 @@ double SumproductAlgorithm(double* Pi, double** qij0, double** qij1, int m, int*
 		Q1[j] = Qi1;
 
 
-		//判斷 codeword
+		//?�斷 codeword
 		if (Q1[j] > 0.5)
 			c_[j] = 1;
 		else c_[j] = 0;
@@ -171,8 +171,8 @@ double SumproductAlgorithm2(double* Pi, double** qij0, double** qij1, int m, int
 	double product_qij0;
 	double product_qij1;
 
-	//double pai;//pai = 暫存用變數
-	//double phai;//phai = 暫存用變數
+	//double pai;//pai = ?��??��???
+	//double phai;//phai = ?��??��???
 	//double fabs;
 	//double min;
 	double product_rji;
@@ -186,7 +186,7 @@ double SumproductAlgorithm2(double* Pi, double** qij0, double** qij1, int m, int
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array 初始化
+	//array ?��???
 	for (i = 0; i < n; i++)
 		r_column[i] = 0;
 	for (i = 0; i < m; i++)
@@ -194,20 +194,20 @@ double SumproductAlgorithm2(double* Pi, double** qij0, double** qij1, int m, int
 	//errno_t err_fopen1;
 	//FILE* fid3;
 	//err_fopen1 = fopen_s(&fid3, "SPA_Qi.dat", "a+");
-	for (j = 0; j < m; j++)	  //逐個 check node
+	for (j = 0; j < m; j++)	  //?��?check node
 	{
-		for (l = 0; l < maxdegree; l++)		 //逐個處理 row degree 內的邊
+		for (l = 0; l < maxdegree; l++)		 //?�個�???row degree ?��???
 		{
 			counter = 0;
 			for (q = 0; q < maxdegree; q++)
-				if (avoid_two_cycle_usage == 0)	  //還原 2-cycle by willy，保留原本的 cycle-2 計算方式
+				if (avoid_two_cycle_usage == 0)	  //?��? 2-cycle by willy，�??��??��? cycle-2 計�??��?
 				{
 					temp_row[counter] = qij1[j][q];
 					//printf("%f ", temp_row[counter]);
 					counter++;
 				}
 				else
-					if (q != l)	   //排除 cycle-2 對應項
+					if (q != l)	   //?�除 cycle-2 對�???
 					{
 						temp_row[counter] = qij1[j][q];
 						//printf("%f ", temp_row[counter]);
@@ -237,23 +237,23 @@ double SumproductAlgorithm2(double* Pi, double** qij0, double** qij1, int m, int
 		}//for(l=0;l<maxdegree;l++)
 	}// for(j=0;j<m;j++)
 	//computation of {LLR_qij} 
-	for (j = 0; j < n; j++)	  //逐個 variable node
+	for (j = 0; j < n; j++)	  //?��?variable node
 	{
-		for (l = 0; l < maxcoldegree; l++)	 //逐個處理 column degree 內的邊
+		for (l = 0; l < maxcoldegree; l++)	 //?�個�???column degree ?��???
 		{
-			if (C[j][l] != 0)	   //有連線時才更新
+			if (C[j][l] != 0)	   //?��???��??�新
 			{
 				product_qij0 = 1;
 				product_qij1 = 1;
 				for (i = 0; i < maxcoldegree; i++)
 				{
-					if (i != l)	   //排除 cycle-2 對應項
+					if (i != l)	   //?�除 cycle-2 對�???
 					{
-						product_qij0 = product_qij0 * rji0[j][i];	  //rji0 為 check-to-variable messages
+						product_qij0 = product_qij0 * rji0[j][i];	  //rji0 ??check-to-variable messages
 						product_qij1 = product_qij1 * rji1[j][i];
 					}
 				}
-				if (avoid_two_cycle_usage == 0)	  //還原 cycle-2 時，這裡也保留對應的 cycle-2 項
+				if (avoid_two_cycle_usage == 0)	  //?��? cycle-2 ?��??�裡也�??��??��? cycle-2 ??
 				{
 					product_qij0 = product_qij0 * rji0[j][l];
 					product_qij1 = product_qij1 * rji1[j][l];
@@ -267,7 +267,7 @@ double SumproductAlgorithm2(double* Pi, double** qij0, double** qij1, int m, int
 				if (product_qij1 == 0)
 					product_qij1 = 0.0000000001;
 
-				K = product_qij0 + product_qij1;	   //正規化，讓 0 與 1 的機率總和為 1
+				K = product_qij0 + product_qij1;	   //�???��?�?0 ??1 ?��??�總?�為 1
 
 				product_qij0 = product_qij0 / K;
 				product_qij1 = product_qij1 / K;
@@ -275,7 +275,7 @@ double SumproductAlgorithm2(double* Pi, double** qij0, double** qij1, int m, int
 				//fprintf(fid3, "(0)q%d %d: %f\n", j, C[j][l] - 1, product_qij0);
 				//fprintf(fid3, "(1)q%d %d: %f\n", j, C[j][l] - 1, product_qij1);
 				//store
-				qij0[C[j][l] - 1][q_column[C[j][l] - 1]] = product_qij0;   //儲存 q 訊息
+				qij0[C[j][l] - 1][q_column[C[j][l] - 1]] = product_qij0;   //?��? q 訊息
 				qij1[C[j][l] - 1][q_column[C[j][l] - 1]] = product_qij1;
 				q_column[C[j][l] - 1] = q_column[C[j][l] - 1] + 1;
 			}
@@ -296,8 +296,8 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 	double product_qij0;
 	double product_qij1;
 
-	//double pai;//pai = 暫存用變數
-	//double phai;//phai = 暫存用變數
+	//double pai;//pai = ?��??��???
+	//double phai;//phai = ?��??��???
 	//double fabs;
 	//double min;
 	double product_rji;
@@ -311,28 +311,9 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array 初始化
+	//array ?��???
 	int Qnumber;
 	int cyclenumber;
-	int* is_cn_muted = new int[m];
-
-	for (i = 0; i < m; i++)
-		is_cn_muted[i] = 0;
-
-	for (i = 0; i < m; i++)
-	{
-		for (j = 0; j < maxdegree; j++)
-		{
-			if (R[i][j] == 0) continue;
-
-			if (is_hotspot(R[i][j] - 1))
-			{
-				is_cn_muted[i] = 1;
-				break;
-			}
-		}
-	}
-
 
 	for (Qnumber = 0; Qnumber < n; Qnumber++)
 	{
@@ -356,7 +337,7 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 				//err_fopen1 = fopen_s(&fid3, "rji.dat", "a+");
 				//fprintf(fid3, "%d %d\n", j,l);
 
-				sumproduct3(temp_row, &rji, maxdegree, Qnumber, j, l, R, C, n, m, Pi, maxcoldegree);		//計算 r 訊息
+				sumproduct3(temp_row, &rji, maxdegree, Qnumber, j, l, R, C, n, m, Pi, maxcoldegree);		//計�? r 訊息
 
 				//fprintf(fid3, "min1:%f \n", rji);
 				//fclose(fid3);
@@ -367,14 +348,8 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 
 					//store
 				//printf("rji:%f \n", product_rji);
-				if (is_cn_muted[j] == 1) {
-					temp_rji0[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5;
-					temp_rji1[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5;
-				}
-				else {
-					temp_rji0[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 + 0.5 * product_rji;	   //暫存更新後的 r 訊息
-					temp_rji1[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 - 0.5 * product_rji;
-				}
+				temp_rji0[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 + 0.5 * product_rji;	   //?��??�新後�? r 訊息
+				temp_rji1[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 - 0.5 * product_rji;
 				//printf("rji0:%f rji1:%f\n", 0.5 + 0.5 * product_rji, 0.5 - 0.5 * product_rji);
 
 				r_column[R[j][l] - 1] = r_column[R[j][l] - 1] + 1;
@@ -394,14 +369,14 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 					{
 						if (i != l)
 						{
-							product_qij0 = product_qij0 * temp_rji0[j][i];//rji0 為 check-to-variable messages
+							product_qij0 = product_qij0 * temp_rji0[j][i];//rji0 ??check-to-variable messages
 							product_qij1 = product_qij1 * temp_rji1[j][i];
 						}
 					}
 					Qi0 = product_qij0 * temp_rji0[j][l];
 					Qi1 = product_qij1 * temp_rji1[j][l];
 
-					product_qij0 = product_qij0 * (1 - Pi[j]);		  //計算 q 訊息
+					product_qij0 = product_qij0 * (1 - Pi[j]);		  //計�? q 訊息
 					product_qij1 = product_qij1 * Pi[j];
 
 					if (product_qij0 == 0)
@@ -415,7 +390,7 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 					product_qij1 = product_qij1 / K;
 
 					//store
-					temp_qij0[C[j][l] - 1][q_column[C[j][l] - 1]] = product_qij0;		  //暫存更新後的 q 訊息
+					temp_qij0[C[j][l] - 1][q_column[C[j][l] - 1]] = product_qij0;		  //?��??�新後�? q 訊息
 					temp_qij1[C[j][l] - 1][q_column[C[j][l] - 1]] = product_qij1;
 					q_column[C[j][l] - 1] = q_column[C[j][l] - 1] + 1;
 				}
@@ -454,14 +429,8 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 
 						//store
 					//printf("rji:%f \n", product_rji);
-					if (is_cn_muted[j] == 1) {
-						temp_rji0[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5;
-						temp_rji1[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5;
-					}
-					else {
-						temp_rji0[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 + 0.5 * product_rji;
-						temp_rji1[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 - 0.5 * product_rji;
-					}
+					temp_rji0[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 + 0.5 * product_rji;
+					temp_rji1[R[j][l] - 1][r_column[R[j][l] - 1]] = 0.5 - 0.5 * product_rji;
 					//printf("rji0:%f rji1:%f\n", 0.5 + 0.5 * product_rji, 0.5 - 0.5 * product_rji);
 
 					r_column[R[j][l] - 1] = r_column[R[j][l] - 1] + 1;
@@ -481,7 +450,7 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 						{
 							if (i != l)
 							{
-								product_qij0 = product_qij0 * temp_rji0[j][i];//rji0 為 check-to-variable messages
+								product_qij0 = product_qij0 * temp_rji0[j][i];//rji0 ??check-to-variable messages
 								product_qij1 = product_qij1 * temp_rji1[j][i];
 							}
 						}
@@ -551,7 +520,7 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 
 		Q1[Qnumber] = Qi1;
 
-		//判斷 codeword
+		//?�斷 codeword
 		if (Q1[Qnumber] > 0.5)
 			c_[Qnumber] = 1;
 		else c_[Qnumber] = 0;
@@ -559,7 +528,6 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 	}
 	//delete (temp_row);
 
-	delete[] is_cn_muted;
 	return 0;
 }
 
@@ -637,7 +605,7 @@ int find_parent_index(int level4_index, int n, int m, int** R, int** C, int maxd
 			   break;
 	 }
 
-	 // 回傳 level2 的父節點
+	 // ?�傳 level2 ?�父節�?
 	 return level2_index;
 }
 
@@ -649,28 +617,28 @@ void sumproduct3(double* row, double* rji, int maxdegree, int Qnumber, int j, in
     double product = 1.0;
     bool has_root_source = false;
 
-    // 1. 檢查此檢驗節點 (j) 的「訊息來源」是否包含根節點 (Qnumber)
+    // 1. 檢查此檢驗�?�?(j) ?�「�??��?源」是?��??�根節�?(Qnumber)
     for (i = 0; i < maxdegree; i++) {
-        if (R[j][i] == 0) continue; // 🌟 防護：略過不規則矩陣的補零空位
+        if (R[j][i] == 0) continue; // ?? ?�護：略?��?規�??�陣?��??�空�?
 
-        // 條件：如果某個相鄰變數節點剛好是根節點，且它【不是】這次要傳遞的目標對象(l)
+        // 條件：�??��??�相?��??��?點�?好是?��?點�?且�??��??�】這次要傳?��??��?對象(l)
         if (i != l && (R[j][i] - 1) == Qnumber) {
             has_root_source = true;
-            break; // 只要觸發條件，立刻中斷尋找
+            break; // ?��?觸發條件，�??�中?��???
         }
     }
 
-    // 2. 🎯 執行「捨棄方程式」邏輯
+    // 2. ?�� ?��??�捨棄方程�??��?�?
     if (has_root_source) {
-        // 直接輸出 0.0，切斷這個 check node 的所有情報
+        // ?�接輸出 0.0，�??�這�?check node ?��??��???
         *rji = 0.0;  
         return; 
     }
 
-    // 3. 若為安全的檢驗節點 (未被迴圈汙染)，則正常計算外在訊息
+    // 3. ?�為安全?�檢驗�?�?(?�被迴�?汙�?)，�?�?��計�?外在訊息
     for (i = 0; i < maxdegree; i++) {
         if (i != l) {
-            if (R[j][i] == 0) continue; // 🌟 防護：避免把空位當成有效節點乘進去
+            if (R[j][i] == 0) continue; // ?? ?�護：避?��?空�??��??��?節點�??�去
             product *= (1.0 - 2.0 * row[i]);
         }
     }
@@ -705,18 +673,18 @@ void sumproduct3(double* row, double* rji, int maxdegree, int Qnumber, int j, in
                 if (is_4cycle) break;
             }
 
-            // 3. Hybrid SPA 核心邏輯：精準打擊
+            // 3. Hybrid SPA ?��??�輯：精準�???
             if (is_4cycle) {
-                // 如果這個產生 4-cycle 的節點是熱點毒瘤，則直接捨棄整個檢查方程式 (提早結束並給予 0.0)
+                // 如�??�個產??4-cycle ?��?點是?��?毒瘤，�??�接?��??�個檢?�方程�? (?�早結�?並給�?0.0)
                 if (is_hotspot(v_neighbor)) {
                     *rji = 0.0;
-                    return; // 直接中斷這個 function，捨棄這個檢查節點傳遞出去的訊息
+                    return; // ?�接中斷?��?function，捨棄這個檢?��?點傳?�出?��?訊息
                 } else {
-                    // 如果只是偶然產生 1 次 4-cycle 的普通節點，放過它，維持標準 SPA 外在訊息計算
+                    // 如�??�是?�然?��? 1 �?4-cycle ?�普?��?點�??��?它�?維�?標�? SPA 外在訊息計�?
                     product *= (1.0 - 2.0 * row[i]);
                 }
             } else {
-                // 正常的非迴圈路徑，維持標準 SPA 外在訊息計算
+                // �?��?��?迴�?路�?，維?��?�?SPA 外在訊息計�?
                 product *= (1.0 - 2.0 * row[i]);
             }
         }
@@ -729,41 +697,49 @@ void sumproduct3(double* row, double* rji, int maxdegree, int Qnumber, int j, in
 void sumproduct3(double* row, double* rji, int maxdegree, int Qnumber, int j, int l, int** R, int** C, int n, int m, double* Pi, int maxcoldegree) {
     int i;
     double product = 1.0;
+    const bool target_is_hotspot = is_hotspot(Qnumber);
 
-    for (i = 0; i < maxdegree; i++) {
-        if (i != l) {
-            if (R[j][i] == 0) continue;
-
-            bool is_4cycle = false;
-            int v_neighbor = R[j][i] - 1;
-
-            for (int k = 0; k < maxcoldegree; k++) {
-                if (C[v_neighbor][k] == 0 || C[v_neighbor][k] - 1 == j) continue;
-
-                int neighbor_check = C[v_neighbor][k] - 1;
-                for (int k2 = 0; k2 < maxdegree; k2++) {
-                    if (R[neighbor_check][k2] == 0) continue;
-                    if (R[neighbor_check][k2] - 1 == Qnumber) {
-                        is_4cycle = true;
-                        break;
-                    }
-                }
-
-                if (is_4cycle) break;
-            }
-
-            if (is_4cycle) {
-                // 🎯 關鍵修正：判斷目前的「目標變數節點 (Qnumber)」是否為熱點
-                if (is_hotspot(Qnumber)) {
-                    *rji = 0.0;
-                    return;
-                } else {
-                    product *= (1.0 - 2.0 * row[i]);
-                }
-            } else {
-                product *= (1.0 - 2.0 * row[i]);
-            }
+    // Fast path: non-hotspot targets use the standard SPA check-node update.
+    if (!target_is_hotspot) {
+        for (i = 0; i < maxdegree; i++) {
+            if (i == l || R[j][i] == 0) continue;
+            product *= (1.0 - 2.0 * row[i]);
         }
+        *rji = product;
+        return;
+    }
+
+    // Hotspot targets only: search for a 4-cycle involving Qnumber.
+    for (i = 0; i < maxdegree; i++) {
+        if (i == l || R[j][i] == 0) continue;
+
+        bool is_4cycle = false;
+        const int v_neighbor = R[j][i] - 1;
+        if (v_neighbor < 0 || v_neighbor >= n) continue;
+
+        for (int k = 0; k < maxcoldegree; k++) {
+            if (C[v_neighbor][k] == 0 || C[v_neighbor][k] - 1 == j) continue;
+
+            const int neighbor_check = C[v_neighbor][k] - 1;
+            if (neighbor_check < 0 || neighbor_check >= m) continue;
+
+            for (int k2 = 0; k2 < maxdegree; k2++) {
+                if (R[neighbor_check][k2] == 0) continue;
+                if (R[neighbor_check][k2] - 1 == Qnumber) {
+                    is_4cycle = true;
+                    break;
+                }
+            }
+
+            if (is_4cycle) break;
+        }
+
+        if (is_4cycle) {
+            *rji = 0.0;
+            return;
+        }
+
+        product *= (1.0 - 2.0 * row[i]);
     }
 
     *rji = product;
@@ -773,9 +749,9 @@ double LogSumproductAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, in
 {
 	int i, j, l, q;
 	double Qi = 0;
-	double sigma;//sigma = 所有輸入訊息總和
-	//double pai;//pai = 暫存用變數
-	//double phai;//phai = 暫存用變數
+	double sigma;//sigma = ?�?�輸?��??�總??
+	//double pai;//pai = ?��??��???
+	//double phai;//phai = ?��??��???
 	//double fabs;
 	//double min;
 	double LLR_rji;
@@ -789,7 +765,7 @@ double LogSumproductAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, in
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array 初始化
+	//array ?��???
 	for (i = 0; i < n; i++)
 		r_column[i] = 0;
 	for (i = 0; i < m; i++)
@@ -803,7 +779,7 @@ double LogSumproductAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, in
 		{
 			counter = 0;
 			for (q = 0; q < maxdegree; q++)
-				if (avoid_two_cycle_usage == 0)//還原 2-cycle by willy
+				if (avoid_two_cycle_usage == 0)//?��? 2-cycle by willy
 				{
 					temp_row[counter] = qij1[j][q];
 					counter++;
@@ -847,10 +823,10 @@ double LogSumproductAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, in
 				sigma = 0;
 				for (i = 0; i < maxcoldegree; i++)
 				{
-					sigma += rji0[j][i];//rji0 為 check-to-variable messages
+					sigma += rji0[j][i];//rji0 ??check-to-variable messages
 				}
 				Qi = sigma;
-				if (avoid_two_cycle_usage == 1) //排除 2-cycle 影響
+				if (avoid_two_cycle_usage == 1) //?�除 2-cycle 影響
 				{
 					sigma -= rji0[j][l];
 				}
@@ -871,7 +847,7 @@ double LogSumproductAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, in
 		//fprintf(fid3, "%f \n", Qi);
 		//fclose(fid3);
 
-		//判斷 codeword
+		//?�斷 codeword
 		if (LQ[j] < 0)
 			c_[j] = 1;
 		else c_[j] = 0;
@@ -886,9 +862,9 @@ double LogSumproductAlgorithm2(double* LLR_Pi1, double** qij1, int m, int** R, i
 {
 	int i, j, l, q;
 	double Qi = 0;
-	double sigma;//sigma = 所有輸入訊息總和
-	//double pai;//pai = 暫存用變數
-	//double phai;//phai = 暫存用變數
+	double sigma;//sigma = ?�?�輸?��??�總??
+	//double pai;//pai = ?��??��???
+	//double phai;//phai = ?��??��???
 	//double fabs;
 	//double min;
 	double LLR_rji;
@@ -902,7 +878,7 @@ double LogSumproductAlgorithm2(double* LLR_Pi1, double** qij1, int m, int** R, i
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array 初始化
+	//array ?��???
 	for (i = 0; i < n; i++)
 		r_column[i] = 0;
 	for (i = 0; i < m; i++)
@@ -954,7 +930,7 @@ double LogSumproductAlgorithm2(double* LLR_Pi1, double** qij1, int m, int** R, i
 				sigma = 0;
 				for (i = 0; i < maxcoldegree; i++)
 				{
-					sigma += rji0[j][i];//rji0 為 check-to-variable messages
+					sigma += rji0[j][i];//rji0 ??check-to-variable messages
 				}
 				Qi = sigma;
 				sigma -= rji0[j][l];
@@ -974,9 +950,9 @@ double LogSumproductAlgorithm_anycycle(double* LLR_Pi1, double** qij1, double** 
 {
 	int i, j, l, q;
 	double Qi = 0;
-	double sigma;//sigma = 所有輸入訊息總和
-	//double pai;//pai = 暫存用變數
-	//double phai;//phai = 暫存用變數
+	double sigma;//sigma = ?�?�輸?��??�總??
+	//double pai;//pai = ?��??��???
+	//double phai;//phai = ?��??��???
 	//double fabs;
 	//double min;
 	double LLR_rji;
@@ -991,7 +967,7 @@ double LogSumproductAlgorithm_anycycle(double* LLR_Pi1, double** qij1, double** 
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array 初始化
+	//array ?��???
 	for (Qnumber = 0; Qnumber < n; Qnumber++)
 	{
 		//fprintf(fid3, "Q%d\n", Qnumber);
@@ -1036,9 +1012,9 @@ double LogSumproductAlgorithm_anycycle(double* LLR_Pi1, double** qij1, double** 
 			{
 				sigma = 0;
 				for (i = 0; i < maxcoldegree; i++)
-					sigma += temp_rji0[j][i];//rji0 為 check-to-variable messages
-				sigma -= temp_rji0[j][l]; //扣除 2-cycle 對應項
-				sigma += LLR_Pi1[j]; //加上通道初始 LLR
+					sigma += temp_rji0[j][i];//rji0 ??check-to-variable messages
+				sigma -= temp_rji0[j][l]; //??�� 2-cycle 對�???
+				sigma += LLR_Pi1[j]; //?��??��??��? LLR
 				//store
 				//fprintf(fid3, "(1)q%d %d: %f\n", j, C[j][l]-1,sigma);
 				temp_qij1[C[j][l] - 1][q_column[C[j][l] - 1]] = sigma;
@@ -1079,9 +1055,9 @@ double LogSumproductAlgorithm_anycycle(double* LLR_Pi1, double** qij1, double** 
 				{
 					sigma = 0;
 					for (i = 0; i < maxcoldegree; i++)
-						sigma += temp_rji0[j][i];//rji0 為 check-to-variable messages
-					sigma -= temp_rji0[j][l]; //扣除 2-cycle 對應項
-					sigma += LLR_Pi1[j]; //加上通道初始 LLR
+						sigma += temp_rji0[j][i];//rji0 ??check-to-variable messages
+					sigma -= temp_rji0[j][l]; //??�� 2-cycle 對�???
+					sigma += LLR_Pi1[j]; //?��??��??��? LLR
 					//store
 					temp_qij1[C[j][l] - 1][q_column[C[j][l] - 1]] = sigma;
 					q_column[C[j][l] - 1] = q_column[C[j][l] - 1] + 1;
@@ -1118,7 +1094,7 @@ double LogSumproductAlgorithm_anycycle(double* LLR_Pi1, double** qij1, double** 
 
 		//fprintf(fid3, "Q%d : %f\n",Qnumber, LQ[Qnumber]);
 
-		//判斷 codeword
+		//?�斷 codeword
 		if (LQ[Qnumber] < 0)
 			c_[Qnumber] = 1;
 		else c_[Qnumber] = 0;
@@ -1181,7 +1157,7 @@ void logsumproduct_cycle(double* row, double* rji, int maxdegree, int Qnumber, i
 	double temp_rji = 0;
 	for (i = 0; i < maxdegree; i++)
 	{
-		if (i != l) //先計算符號乘積，避免 2-cycle 影響 sign 計算
+		if (i != l) //?��?算符?��?積�??��? 2-cycle 影響 sign 計�?
 		{
 			if (row[i] > 0)
 				sign_row[i] = 1;
@@ -1191,7 +1167,7 @@ void logsumproduct_cycle(double* row, double* rji, int maxdegree, int Qnumber, i
 			sign = sign * sign_row[i];
 		}
 	}
-	for (i = 0; i < maxdegree; i++) //再計算 magnitude，排除 4-cycle
+	for (i = 0; i < maxdegree; i++) //?��?�?magnitude，�???4-cycle
 	{
 		if (i != l && Qnumber != R[j][i] - 1)
 		{
@@ -1203,7 +1179,7 @@ void logsumproduct_cycle(double* row, double* rji, int maxdegree, int Qnumber, i
 		//}
 	}
 
-	temp_rji = -log(tanh(0.5 * temp_rji)); //反算回訊息值
+	temp_rji = -log(tanh(0.5 * temp_rji)); //?��??��??��?
 	//printf("rji:%f\n", temp_rji);
 	if (isinf(temp_rji) == 1)
 		temp_rji = 999;

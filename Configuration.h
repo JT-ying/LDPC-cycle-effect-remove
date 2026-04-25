@@ -2,12 +2,12 @@
 
 //參數設定
 //跑模擬時要注意system("pause")有沒有關掉
-const int simulation_times = 5;
+const int simulation_times = 11;
 
-//const double SNR[simulation_times] = {2.5};
-//const double SNR[simulation_times] = {1.0,1.25,1.5,1.75,2.0,2.25,2.5,2.75,3.0,3.25,3.5};
+//const double SNR[simulation_times] = {5.5};
+const double SNR[simulation_times] = {1.0,1.25,1.5,1.75,2.0,2.25,2.5,2.75,3.0,3.25,3.5};
 //const double SNR[simulation_times] = {1.0,1.25,1.5,1.75,2.0,2.25,2.5}; //(dB)，做7個db，simulation_times也要變動
-const double SNR[simulation_times] = {2.5,2.75,3.0,3.25,3.5};//(dB)，做多個db，simulation_times也要變動
+//const double SNR[simulation_times] = {2.5,2.75,3.0,3.25,3.5};//(dB)，做多個db，simulation_times也要變動
 //const double SNR[simulation_times] = { 3.75, 4.0 };    //補高SNR
 //const double SNR[simulation_times] = {1.0,1.25,1.5};
 //const double SNR[simulation_times] = {1.75,2.0,2.25};
@@ -17,15 +17,15 @@ const double SNR[simulation_times] = {2.5,2.75,3.0,3.25,3.5};//(dB)，做多個d
 //const double SNR[simulation_times] = {3.25,3.5};
 //const double rate = 0.4;
 
-const int iteration = 100; //最大迭代次數
+const int iteration = 50; //最大迭代次數
 const int effective_exam_number = 100000; //有效模擬次數 若需僅採計迭代次數未達到最大迭代次數時使用(搭配Max_iteration_usage)
 const int noise_estimation_errors_usage = 1; //1為考慮SNR估計誤差(除以設定SNR power)，0為不考慮(除以實際噪音SNR power)，需使用SNR_offset_usage
-const int exam_number = 1000; //總模擬次數
+const int exam_number = 10000; //總模擬次數
 const int Max_iteration_usage = 0;// 任何模擬中，達到最大迭代次數的模擬是否捨棄，0為保留，1為捨棄
 const double SNR_offset_usage = 0; //控制產生的noise pattern之db不能高於或低於設定的db超過SNR_offset_usage，設定0則不限制
 
 
-const int random_usage = 1;// 1是使用隨機變數(time32(NULL)),其他數字是使用該數字做為變數種子(固定變數)
+const int random_usage = 0;// 1是使用隨機變數(time32(NULL)),其他數字是使用該數字做為變數種子(固定變數)
 const int boxsum_usage = 0;// 1就是使用boxsum,0是使用minsum
 const int iteration_output_usage = 0;// SPA,MSA且不做極值化時，加上條件:i>=iteration_output_usage時 才能脫離迭代
 
