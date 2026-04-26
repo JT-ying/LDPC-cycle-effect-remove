@@ -4,7 +4,7 @@
 #include <time.h>
 #include "Configuration.h"
 
-// 4-cycle ?±é?é»‘å???(?ƒè? >= 2 æ¬¡ç? Variable Nodes)
+// 4-cycle ç†±é»é»‘åå–® (åƒèˆ‡ >= 2 æ¬¡çš„ Variable Nodes)
 static const int HOTSPOT_NODES[] = {
 	28, 56, 57, 81, 127, 132, 141,
 	149, 155, 158, 173, 183, 188
@@ -32,8 +32,8 @@ double SumproductAlgorithm(double* Pi, double** qij0, double** qij1, int m, int*
 	double product_qij0;
 	double product_qij1;
 
-	//double pai;//pai = ?«å??¨è???
-	//double phai;//phai = ?«å??¨è???
+	//double pai;//pai = æš«å­˜ç”¨è®Šæ•¸
+	//double phai;//phai = æš«å­˜ç”¨è®Šæ•¸
 	//double fabs;
 	//double min;
 	double product_rji;
@@ -47,7 +47,7 @@ double SumproductAlgorithm(double* Pi, double** qij0, double** qij1, int m, int*
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array ?å???
+	//array åˆå§‹åŒ–
 	for (i = 0; i < n; i++)
 		r_column[i] = 0;
 	for (i = 0; i < m; i++)
@@ -61,7 +61,7 @@ double SumproductAlgorithm(double* Pi, double** qij0, double** qij1, int m, int*
 		{
 			counter = 0;
 			for (q = 0; q < maxdegree; q++)
-				if (avoid_two_cycle_usage == 0)//?„å? 2-cycle by willy
+				if (avoid_two_cycle_usage == 0)		//é‚„åŸ 2-cycle by willy
 				{
 					temp_row[counter] = qij1[j][q];
 					//printf("%f ", temp_row[counter]);
@@ -110,7 +110,7 @@ double SumproductAlgorithm(double* Pi, double** qij0, double** qij1, int m, int*
 				{
 					if (i != l)
 					{
-						product_qij0 = product_qij0 * rji0[j][i];//rji0 ??check-to-variable messages
+						product_qij0 = product_qij0 * rji0[j][i];		//rji0 ç‚º check-to-variable messages
 						product_qij1 = product_qij1 * rji1[j][i];
 					}
 				}
@@ -159,7 +159,7 @@ double SumproductAlgorithm(double* Pi, double** qij0, double** qij1, int m, int*
 		Q1[j] = Qi1;
 
 
-		//?¤æ–· codeword
+		//åˆ¤æ–· codeword
 		if (Q1[j] > 0.5)
 			c_[j] = 1;
 		else c_[j] = 0;
@@ -179,8 +179,8 @@ double SumproductAlgorithm2(double* Pi, double** qij0, double** qij1, int m, int
 	double product_qij0;
 	double product_qij1;
 
-	//double pai;//pai = ?«å??¨è???
-	//double phai;//phai = ?«å??¨è???
+	//double pai;//pai = æš«å­˜ç”¨è®Šæ•¸
+	//double phai;//phai = æš«å­˜ç”¨è®Šæ•¸
 	//double fabs;
 	//double min;
 	double product_rji;
@@ -194,7 +194,7 @@ double SumproductAlgorithm2(double* Pi, double** qij0, double** qij1, int m, int
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array ?å???
+	//array åˆå§‹åŒ–
 	for (i = 0; i < n; i++)
 		r_column[i] = 0;
 	for (i = 0; i < m; i++)
@@ -202,20 +202,20 @@ double SumproductAlgorithm2(double* Pi, double** qij0, double** qij1, int m, int
 	//errno_t err_fopen1;
 	//FILE* fid3;
 	//err_fopen1 = fopen_s(&fid3, "SPA_Qi.dat", "a+");
-	for (j = 0; j < m; j++)	  //?å€?check node
+	for (j = 0; j < m; j++)		//é€å€‹ check node
 	{
-		for (l = 0; l < maxdegree; l++)		 //?å€‹è???row degree ?§ç???
+		for (l = 0; l < maxdegree; l++)		//é€å€‹è™•ç† row degree å…§çš„é‚Š
 		{
 			counter = 0;
 			for (q = 0; q < maxdegree; q++)
-				if (avoid_two_cycle_usage == 0)	  //?„å? 2-cycle by willyï¼Œä??™å??¬ç? cycle-2 è¨ˆç??¹å?
+				if (avoid_two_cycle_usage == 0)		//é‚„åŸ 2-cycle by willy
 				{
 					temp_row[counter] = qij1[j][q];
 					//printf("%f ", temp_row[counter]);
 					counter++;
 				}
 				else
-					if (q != l)	   //?’é™¤ cycle-2 å°æ???
+					if (q != l)		//æ’é™¤ cycle-2 å°æ‡‰é …
 					{
 						temp_row[counter] = qij1[j][q];
 						//printf("%f ", temp_row[counter]);
@@ -245,23 +245,23 @@ double SumproductAlgorithm2(double* Pi, double** qij0, double** qij1, int m, int
 		}//for(l=0;l<maxdegree;l++)
 	}// for(j=0;j<m;j++)
 	//computation of {LLR_qij} 
-	for (j = 0; j < n; j++)	  //?å€?variable node
+	for (j = 0; j < n; j++)		//é€å€‹ variable node
 	{
-		for (l = 0; l < maxcoldegree; l++)	 //?å€‹è???column degree ?§ç???
+		for (l = 0; l < maxcoldegree; l++)		//é€å€‹è™•ç† column degree å…§çš„é‚Š
 		{
-			if (C[j][l] != 0)	   //?‰é€???‚æ??´æ–°
+			if (C[j][l] != 0)		//æœ‰é€£ç·šæ™‚æ‰æ›´æ–°
 			{
 				product_qij0 = 1;
 				product_qij1 = 1;
 				for (i = 0; i < maxcoldegree; i++)
 				{
-					if (i != l)	   //?’é™¤ cycle-2 å°æ???
+					if (i != l)		//æ’é™¤ cycle-2 å°æ‡‰é …
 					{
-						product_qij0 = product_qij0 * rji0[j][i];	  //rji0 ??check-to-variable messages
+						product_qij0 = product_qij0 * rji0[j][i];		//rji0 ç‚º check-to-variable messages
 						product_qij1 = product_qij1 * rji1[j][i];
 					}
 				}
-				if (avoid_two_cycle_usage == 0)	  //?„å? cycle-2 ?‚ï??™è£¡ä¹Ÿä??™å??‰ç? cycle-2 ??
+				if (avoid_two_cycle_usage == 0)		//é‚„åŸ 2-cycle by willy
 				{
 					product_qij0 = product_qij0 * rji0[j][l];
 					product_qij1 = product_qij1 * rji1[j][l];
@@ -275,7 +275,7 @@ double SumproductAlgorithm2(double* Pi, double** qij0, double** qij1, int m, int
 				if (product_qij1 == 0)
 					product_qij1 = 0.0000000001;
 
-				K = product_qij0 + product_qij1;	   //æ­???–ï?è®?0 ??1 ?„æ??‡ç¸½?Œç‚º 1
+				K = product_qij0 + product_qij1;		//æ­£è¦åŒ–ï¼Œè®“ 0 èˆ‡ 1 çš„æ©Ÿç‡ç¸½å’Œç‚º 1
 
 				product_qij0 = product_qij0 / K;
 				product_qij1 = product_qij1 / K;
@@ -283,7 +283,7 @@ double SumproductAlgorithm2(double* Pi, double** qij0, double** qij1, int m, int
 				//fprintf(fid3, "(0)q%d %d: %f\n", j, C[j][l] - 1, product_qij0);
 				//fprintf(fid3, "(1)q%d %d: %f\n", j, C[j][l] - 1, product_qij1);
 				//store
-				qij0[C[j][l] - 1][q_column[C[j][l] - 1]] = product_qij0;   //?²å? q è¨Šæ¯
+				qij0[C[j][l] - 1][q_column[C[j][l] - 1]] = product_qij0;		//å„²å­˜ q è¨Šæ¯
 				qij1[C[j][l] - 1][q_column[C[j][l] - 1]] = product_qij1;
 				q_column[C[j][l] - 1] = q_column[C[j][l] - 1] + 1;
 			}
@@ -304,8 +304,8 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 	double product_qij0;
 	double product_qij1;
 
-	//double pai;//pai = ?«å??¨è???
-	//double phai;//phai = ?«å??¨è???
+	//double pai;//pai = æš«å­˜ç”¨è®Šæ•¸
+	//double phai;//phai = æš«å­˜ç”¨è®Šæ•¸
 	//double fabs;
 	//double min;
 	double product_rji;
@@ -319,7 +319,7 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array ?å???
+	//array åˆå§‹åŒ–
 	int Qnumber;
 	int cyclenumber;
 
@@ -345,7 +345,7 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 				//err_fopen1 = fopen_s(&fid3, "rji.dat", "a+");
 				//fprintf(fid3, "%d %d\n", j,l);
 
-				sumproduct3(temp_row, &rji, maxdegree, Qnumber, j, l, R, C, n, m, Pi, maxcoldegree);		//è¨ˆç? r è¨Šæ¯
+				sumproduct3(temp_row, &rji, maxdegree, Qnumber, j, l, R, C, n, m, Pi, maxcoldegree);		//è¨ˆç®— r è¨Šæ¯
 
 				//fprintf(fid3, "min1:%f \n", rji);
 				//fclose(fid3);
@@ -390,14 +390,14 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 					{
 						if (i != l)
 						{
-							product_qij0 = product_qij0 * temp_rji0[j][i];//rji0 ??check-to-variable messages
+							product_qij0 = product_qij0 * temp_rji0[j][i];		//rji0 ç‚º check-to-variable messages
 							product_qij1 = product_qij1 * temp_rji1[j][i];
 						}
 					}
 					Qi0 = product_qij0 * temp_rji0[j][l];
 					Qi1 = product_qij1 * temp_rji1[j][l];
 
-					product_qij0 = product_qij0 * (1 - Pi[j]);		  //è¨ˆç? q è¨Šæ¯
+					product_qij0 = product_qij0 * (1 - Pi[j]);		//è¨ˆç®— q è¨Šæ¯
 					product_qij1 = product_qij1 * Pi[j];
 
 					if (product_qij0 == 0)
@@ -411,7 +411,7 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 					product_qij1 = product_qij1 / K;
 
 					//store
-					temp_qij0[C[j][l] - 1][q_column[C[j][l] - 1]] = product_qij0;		  //?«å??´æ–°å¾Œç? q è¨Šæ¯
+					temp_qij0[C[j][l] - 1][q_column[C[j][l] - 1]] = product_qij0;		//æš«å­˜æ›´æ–°å¾Œçš„ q è¨Šæ¯
 					temp_qij1[C[j][l] - 1][q_column[C[j][l] - 1]] = product_qij1;
 					q_column[C[j][l] - 1] = q_column[C[j][l] - 1] + 1;
 				}
@@ -484,7 +484,7 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 						{
 							if (i != l)
 							{
-								product_qij0 = product_qij0 * temp_rji0[j][i];//rji0 ??check-to-variable messages
+								product_qij0 = product_qij0 * temp_rji0[j][i];		//rji0 ç‚º check-to-variable messages
 								product_qij1 = product_qij1 * temp_rji1[j][i];
 							}
 						}
@@ -554,7 +554,7 @@ double SumproductAlgorithm_cycle(double* Pi, double** qij0, double** qij1, doubl
 
 		Q1[Qnumber] = Qi1;
 
-		//?¤æ–· codeword
+		//åˆ¤æ–· codeword
 		if (Q1[Qnumber] > 0.5)
 			c_[Qnumber] = 1;
 		else c_[Qnumber] = 0;
@@ -639,7 +639,7 @@ int find_parent_index(int level4_index, int n, int m, int** R, int** C, int maxd
 			   break;
 	 }
 
-	 // ?å‚³ level2 ?„çˆ¶ç¯€é»?
+	 // å›å‚³ level2 çš„ç¯€é»ç´¢å¼•
 	 return level2_index;
 }
 
@@ -651,28 +651,28 @@ void sumproduct3(double* row, double* rji, int maxdegree, int Qnumber, int j, in
     double product = 1.0;
     bool has_root_source = false;
 
-    // 1. æª¢æŸ¥æ­¤æª¢é©—ç?é»?(j) ?„ã€Œè??¯ä?æºã€æ˜¯?¦å??«æ ¹ç¯€é»?(Qnumber)
+    // èˆŠç‰ˆç­–ç•¥ï¼šæª¢æŸ¥æ­¤ check node æ˜¯å¦é€£åˆ°æ ¹ç¯€é» Qnumberã€‚
     for (i = 0; i < maxdegree; i++) {
-        if (R[j][i] == 0) continue; // ?? ?²è­·ï¼šç•¥?ä?è¦å??©é™£?„è??¶ç©ºä½?
+        if (R[j][i] == 0) continue;		// ç•¥éä¸è¦å‰‡çŸ©é™£ä¸­çš„è£œé›¶ç©ºä½
 
-        // æ¢ä»¶ï¼šå??œæ??‹ç›¸?°è??¸ç?é»å?å¥½æ˜¯?¹ç?é»ï?ä¸”å??ä??¯ã€‘é€™æ¬¡è¦å‚³?ç??®æ?å°è±¡(l)
+        // æ’é™¤æœ¬æ¬¡è¼¸å‡ºé‚Š lï¼Œåªæª¢æŸ¥å…¶ä»–ç›¸é„° variable nodeã€‚
         if (i != l && (R[j][i] - 1) == Qnumber) {
             has_root_source = true;
-            break; // ?ªè?è§¸ç™¼æ¢ä»¶ï¼Œç??»ä¸­?·å???
+            break;		// åªè¦è§¸ç™¼æ¢ä»¶ï¼Œç«‹åˆ»ä¸­æ–·æœå°‹
         }
     }
 
-    // 2. ?¯ ?·è??Œæ¨æ£„æ–¹ç¨‹å??é?è¼?
+    // èˆŠç‰ˆç­–ç•¥ï¼šè‹¥å‘½ä¸­æ ¹ç¯€é»ï¼Œç›´æ¥ä¸­æ€§åŒ–æ­¤ check-to-variable è¨Šæ¯ã€‚
     if (has_root_source) {
-        // ?´æ¥è¼¸å‡º 0.0ï¼Œå??·é€™å€?check node ?„æ??‰æ???
+        // æ­¤å€å¡Šè¢« #if 0 åŒ…ä½ï¼Œä¸æœƒåƒèˆ‡ç›®å‰ç·¨è­¯ã€‚
         *rji = 0.0;  
         return; 
     }
 
-    // 3. ?¥ç‚ºå®‰å…¨?„æª¢é©—ç?é»?(?ªè¢«è¿´å?æ±™æ?)ï¼Œå?æ­?¸¸è¨ˆç?å¤–åœ¨è¨Šæ¯
+    // æœªå‘½ä¸­æ™‚ï¼Œè¨ˆç®—æ¨™æº– SPA check-node productã€‚
     for (i = 0; i < maxdegree; i++) {
         if (i != l) {
-            if (R[j][i] == 0) continue; // ?? ?²è­·ï¼šé¿?æ?ç©ºä??¶æ??‰æ?ç¯€é»ä??²å»
+            if (R[j][i] == 0) continue;		// ç•¥éè£œé›¶ç©ºä½
             product *= (1.0 - 2.0 * row[i]);
         }
     }
@@ -704,9 +704,9 @@ double LogSumproductAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, in
 {
 	int i, j, l, q;
 	double Qi = 0;
-	double sigma;//sigma = ?€?‰è¼¸?¥è??¯ç¸½??
-	//double pai;//pai = ?«å??¨è???
-	//double phai;//phai = ?«å??¨è???
+	double sigma;		//sigma = æ‰€æœ‰è¼¸å…¥è¨Šæ¯ç¸½å’Œ
+	//double pai;//pai = æš«å­˜ç”¨è®Šæ•¸
+	//double phai;//phai = æš«å­˜ç”¨è®Šæ•¸
 	//double fabs;
 	//double min;
 	double LLR_rji;
@@ -720,7 +720,7 @@ double LogSumproductAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, in
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array ?å???
+	//array åˆå§‹åŒ–
 	for (i = 0; i < n; i++)
 		r_column[i] = 0;
 	for (i = 0; i < m; i++)
@@ -734,7 +734,7 @@ double LogSumproductAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, in
 		{
 			counter = 0;
 			for (q = 0; q < maxdegree; q++)
-				if (avoid_two_cycle_usage == 0)//?„å? 2-cycle by willy
+				if (avoid_two_cycle_usage == 0)		//é‚„åŸ 2-cycle by willy
 				{
 					temp_row[counter] = qij1[j][q];
 					counter++;
@@ -778,10 +778,10 @@ double LogSumproductAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, in
 				sigma = 0;
 				for (i = 0; i < maxcoldegree; i++)
 				{
-					sigma += rji0[j][i];//rji0 ??check-to-variable messages
+					sigma += rji0[j][i];		//rji0 ç‚º check-to-variable messages
 				}
 				Qi = sigma;
-				if (avoid_two_cycle_usage == 1) //?’é™¤ 2-cycle å½±éŸ¿
+				if (avoid_two_cycle_usage == 1)		//æ’é™¤ 2-cycle å½±éŸ¿
 				{
 					sigma -= rji0[j][l];
 				}
@@ -802,7 +802,7 @@ double LogSumproductAlgorithm(double* LLR_Pi1, double** qij1, int m, int** R, in
 		//fprintf(fid3, "%f \n", Qi);
 		//fclose(fid3);
 
-		//?¤æ–· codeword
+		//åˆ¤æ–· codeword
 		if (LQ[j] < 0)
 			c_[j] = 1;
 		else c_[j] = 0;
@@ -817,9 +817,9 @@ double LogSumproductAlgorithm2(double* LLR_Pi1, double** qij1, int m, int** R, i
 {
 	int i, j, l, q;
 	double Qi = 0;
-	double sigma;//sigma = ?€?‰è¼¸?¥è??¯ç¸½??
-	//double pai;//pai = ?«å??¨è???
-	//double phai;//phai = ?«å??¨è???
+	double sigma;		//sigma = æ‰€æœ‰è¼¸å…¥è¨Šæ¯ç¸½å’Œ
+	//double pai;//pai = æš«å­˜ç”¨è®Šæ•¸
+	//double phai;//phai = æš«å­˜ç”¨è®Šæ•¸
 	//double fabs;
 	//double min;
 	double LLR_rji;
@@ -833,7 +833,7 @@ double LogSumproductAlgorithm2(double* LLR_Pi1, double** qij1, int m, int** R, i
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array ?å???
+	//array åˆå§‹åŒ–
 	for (i = 0; i < n; i++)
 		r_column[i] = 0;
 	for (i = 0; i < m; i++)
@@ -885,7 +885,7 @@ double LogSumproductAlgorithm2(double* LLR_Pi1, double** qij1, int m, int** R, i
 				sigma = 0;
 				for (i = 0; i < maxcoldegree; i++)
 				{
-					sigma += rji0[j][i];//rji0 ??check-to-variable messages
+					sigma += rji0[j][i];		//rji0 ç‚º check-to-variable messages
 				}
 				Qi = sigma;
 				sigma -= rji0[j][l];
@@ -905,9 +905,9 @@ double LogSumproductAlgorithm_anycycle(double* LLR_Pi1, double** qij1, double** 
 {
 	int i, j, l, q;
 	double Qi = 0;
-	double sigma;//sigma = ?€?‰è¼¸?¥è??¯ç¸½??
-	//double pai;//pai = ?«å??¨è???
-	//double phai;//phai = ?«å??¨è???
+	double sigma;		//sigma = æ‰€æœ‰è¼¸å…¥è¨Šæ¯ç¸½å’Œ
+	//double pai;//pai = æš«å­˜ç”¨è®Šæ•¸
+	//double phai;//phai = æš«å­˜ç”¨è®Šæ•¸
 	//double fabs;
 	//double min;
 	double LLR_rji;
@@ -922,7 +922,7 @@ double LogSumproductAlgorithm_anycycle(double* LLR_Pi1, double** qij1, double** 
 	//temp_row = new double [maxdegree-1];
 	//int start;
 	int counter;
-	//array ?å???
+	//array åˆå§‹åŒ–
 	for (Qnumber = 0; Qnumber < n; Qnumber++)
 	{
 		//fprintf(fid3, "Q%d\n", Qnumber);
@@ -967,9 +967,9 @@ double LogSumproductAlgorithm_anycycle(double* LLR_Pi1, double** qij1, double** 
 			{
 				sigma = 0;
 				for (i = 0; i < maxcoldegree; i++)
-					sigma += temp_rji0[j][i];//rji0 ??check-to-variable messages
-				sigma -= temp_rji0[j][l]; //??™¤ 2-cycle å°æ???
-				sigma += LLR_Pi1[j]; //? ä??šé??å? LLR
+					sigma += temp_rji0[j][i];		//rji0 ç‚º check-to-variable messages
+				sigma -= temp_rji0[j][l];		//æ‰£é™¤ 2-cycle å°æ‡‰é …
+				sigma += LLR_Pi1[j];		//åŠ ä¸Šé€šé“åˆå§‹ LLR
 				//store
 				//fprintf(fid3, "(1)q%d %d: %f\n", j, C[j][l]-1,sigma);
 				temp_qij1[C[j][l] - 1][q_column[C[j][l] - 1]] = sigma;
@@ -1010,9 +1010,9 @@ double LogSumproductAlgorithm_anycycle(double* LLR_Pi1, double** qij1, double** 
 				{
 					sigma = 0;
 					for (i = 0; i < maxcoldegree; i++)
-						sigma += temp_rji0[j][i];//rji0 ??check-to-variable messages
-					sigma -= temp_rji0[j][l]; //??™¤ 2-cycle å°æ???
-					sigma += LLR_Pi1[j]; //? ä??šé??å? LLR
+						sigma += temp_rji0[j][i];		//rji0 ç‚º check-to-variable messages
+					sigma -= temp_rji0[j][l];		//æ‰£é™¤ 2-cycle å°æ‡‰é …
+					sigma += LLR_Pi1[j];		//åŠ ä¸Šé€šé“åˆå§‹ LLR
 					//store
 					temp_qij1[C[j][l] - 1][q_column[C[j][l] - 1]] = sigma;
 					q_column[C[j][l] - 1] = q_column[C[j][l] - 1] + 1;
@@ -1049,7 +1049,7 @@ double LogSumproductAlgorithm_anycycle(double* LLR_Pi1, double** qij1, double** 
 
 		//fprintf(fid3, "Q%d : %f\n",Qnumber, LQ[Qnumber]);
 
-		//?¤æ–· codeword
+		//åˆ¤æ–· codeword
 		if (LQ[Qnumber] < 0)
 			c_[Qnumber] = 1;
 		else c_[Qnumber] = 0;
@@ -1112,7 +1112,7 @@ void logsumproduct_cycle(double* row, double* rji, int maxdegree, int Qnumber, i
 	double temp_rji = 0;
 	for (i = 0; i < maxdegree; i++)
 	{
-		if (i != l) //?ˆè?ç®—ç¬¦?Ÿä?ç©ï??¿å? 2-cycle å½±éŸ¿ sign è¨ˆç?
+		if (i != l)		//æ’é™¤ cycle-2 å°æ‡‰é …
 		{
 			if (row[i] > 0)
 				sign_row[i] = 1;
@@ -1122,7 +1122,7 @@ void logsumproduct_cycle(double* row, double* rji, int maxdegree, int Qnumber, i
 			sign = sign * sign_row[i];
 		}
 	}
-	for (i = 0; i < maxdegree; i++) //?è?ç®?magnitudeï¼Œæ???4-cycle
+	for (i = 0; i < maxdegree; i++)		//å†è¨ˆç®— magnitudeï¼Œæ’é™¤ 4-cycle
 	{
 		if (i != l && Qnumber != R[j][i] - 1)
 		{
@@ -1134,7 +1134,7 @@ void logsumproduct_cycle(double* row, double* rji, int maxdegree, int Qnumber, i
 		//}
 	}
 
-	temp_rji = -log(tanh(0.5 * temp_rji)); //?ç??è??¯å€?
+	temp_rji = -log(tanh(0.5 * temp_rji));		//åç®—å›è¨Šæ¯å€¼
 	//printf("rji:%f\n", temp_rji);
 	if (isinf(temp_rji) == 1)
 		temp_rji = 999;

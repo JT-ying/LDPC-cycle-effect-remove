@@ -294,19 +294,87 @@ int main()
 
 			if (sumproduct_usage == 1 && log_sumproduct_usage == 0)
 			{
-				gaussian_noise(c, yi, n, noise_power,SNR[times], Rnoise_power);
-				if (noise_estimation_errors_usage == 0)
-					gaussian_noise_Minsum_c(yi, n, Rnoise_power);
+				if (artificial_error_usage == 1)
+				{
+					if (artificial_error_node < 0 || artificial_error_node >= n)
+					{
+						printf("Error: artificial_error_node is out of range. node=%d, n=%d\n", artificial_error_node, n);
+						exit(1);
+					}
+
+					for (int ii = 0; ii < n; ii++)
+					{
+						if (ii == artificial_error_node)
+						{
+							if (c[ii] == 0)
+							{
+								Pi[ii] = 1.0 - artificial_error_eps;
+							}
+							else
+							{
+								Pi[ii] = artificial_error_eps;
+							}
+						}
+						else
+						{
+							if (c[ii] == 0)
+							{
+								Pi[ii] = artificial_error_eps;
+							}
+							else
+							{
+								Pi[ii] = 1.0 - artificial_error_eps;
+							}
+						}
+
+						yi[ii] = Pi[ii];
+					}
+
+					for (int ii = 0; ii < m; ii++)
+					{
+						for (int jj = 0; jj < maxdegree; jj++)
+						{
+							if (R[ii][jj] != 0)
+							{
+								qij1[ii][jj] = Pi[R[ii][jj] - 1];
+							}
+						}
+					}
+				}
 				else
-					gaussian_noise_Minsum_c(yi, n, noise_power);
-				for (int ii = 0; ii < n; ii++)
-					yi[ii] = 1 / (1 + exp(yi[ii]));
-				for (int ii = 0; ii < n; ii++) 
-					Pi[ii] = yi[ii];
-				for (int ii = 0; ii < m; ii++)
-					for (int jj = 0; jj < maxdegree; jj++)
-						if (R[ii][jj] != 0)
-							qij1[ii][jj] = Pi[R[ii][jj] - 1];
+				{
+					gaussian_noise(c, yi, n, noise_power, SNR[times], Rnoise_power);
+
+					if (noise_estimation_errors_usage == 0)
+					{
+						gaussian_noise_Minsum_c(yi, n, Rnoise_power);
+					}
+					else
+					{
+						gaussian_noise_Minsum_c(yi, n, noise_power);
+					}
+
+					for (int ii = 0; ii < n; ii++)
+					{
+						yi[ii] = 1 / (1 + exp(yi[ii]));
+					}
+
+					for (int ii = 0; ii < n; ii++)
+					{
+						Pi[ii] = yi[ii];
+					}
+
+					for (int ii = 0; ii < m; ii++)
+					{
+						for (int jj = 0; jj < maxdegree; jj++)
+						{
+							if (R[ii][jj] != 0)
+							{
+								qij1[ii][jj] = Pi[R[ii][jj] - 1];
+							}
+						}
+					}
+				}
 			}
 			else
 			{
@@ -502,6 +570,22 @@ int main()
 				}
 			}//while(iter_i < iteration)
 
+			if (artificial_error_usage == 1 && exam == 0)
+			{
+				#pragma omp critical
+				{
+					printf("Artificial error test enabled\n");
+					printf("Artificial target node = %d\n", artificial_error_node);
+					printf("Original c[target] = %d\n", c[artificial_error_node]);
+					printf("Decoded c_[target] = %d\n", c_[artificial_error_node]);
+
+					if (sumproduct_usage == 1 && log_sumproduct_usage == 0)
+					{
+						printf("Q1[target] = %.12f\n", Q1[artificial_error_node]);
+						printf("Pi[target] = %.12f\n", Pi[artificial_error_node]);
+					}
+				}
+			}
 			// === 統計結果 (使用 reduction 累加變數) ===
 			if (Max_iteration_usage == 0) 
 			{

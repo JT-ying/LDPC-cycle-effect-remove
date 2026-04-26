@@ -24,6 +24,11 @@ const int exam_number = 10000; //總模擬次數
 const int Max_iteration_usage = 0;// 任何模擬中，達到最大迭代次數的模擬是否捨棄，0為保留，1為捨棄
 const double SNR_offset_usage = 0; //控制產生的noise pattern之db不能高於或低於設定的db超過SNR_offset_usage，設定0則不限制
 
+// Artificial extreme error test mode
+const int artificial_error_usage = 1;
+const int artificial_error_node = 173;
+const double artificial_error_eps = 1e-10;
+
 
 const int random_usage = 0;// 1是使用隨機變數(time32(NULL)),其他數字是使用該數字做為變數種子(固定變數)
 const int boxsum_usage = 0;// 1就是使用boxsum,0是使用minsum
